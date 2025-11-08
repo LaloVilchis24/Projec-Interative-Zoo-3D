@@ -233,6 +233,10 @@ int main()
     Model B_RightLegRhino((char*)"Models/B_RightLegRhino.obj");
     Model F_LeftLegRhino((char*)"Models/F_LeftLegRhino.obj");
     Model F_RightLegRhino((char*)"Models/F_RightLegRhino.obj");
+    
+    // Modelos de escenario
+    Model wallModel((char*)"Models/Pared/fence.obj");
+    Model entranceModel((char*)"Models/Entrada/Gate_obj.obj");
 
     // Inicializar KeyFrames del rinoceronte
     for (int i = 0; i < MAX_FRAMES_RHINO; i++)
@@ -469,6 +473,21 @@ int main()
         //model = glm::translate(model, glm::vec3(0.15f, 0.05f, 0.25f));
         modelShader.setMat4("model", model);
         B_RightLegRhino.Draw(modelShader);
+
+        // === Dibujar Pared y Entrada ===
+        // Pared
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, -0.5f, -10.0f));
+        model = glm::scale(model, glm::vec3(1.0f));
+        modelShader.setMat4("model", model);
+        wallModel.Draw(modelShader);
+
+        // Entrada
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(3.0f, -0.5f, 25.0f));
+        model = glm::scale(model, glm::vec3(0.1f));
+        modelShader.setMat4("model", model);
+        entranceModel.Draw(modelShader);
 
 
         // === Dibujar Skybox ===
