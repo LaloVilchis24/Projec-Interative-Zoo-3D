@@ -119,7 +119,8 @@ int main()
     glUniform1i(glGetUniformLocation(skyboxShader.Program, "skybox"), 0);
 
     // Load models
-    //Model red_dog((char*)"Models/DOG/RedDog.obj");
+    Model wallModel((char*)"Models/Pared/fence.obj");
+    Model entranceModel((char*)"Models/Entrada/Gate_obj.obj");
 
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
@@ -260,6 +261,34 @@ int main()
         glm::mat4 model = glm::mat4(1.0f);
         lightingShader.setMat4("model", model);
 
+        // === Dibujar modelos ===
+        modelShader.Use();
+        modelShader.setMat4("view", view);
+        modelShader.setMat4("projection", projection);
+
+        // --- Dibuja el muro ---
+        glm::mat4 wallModelMatrix = glm::mat4(1.0f);
+        wallModelMatrix = glm::translate(wallModelMatrix, glm::vec3(0.0f, -0.5f, -5.0f));
+        wallModelMatrix = glm::scale(wallModelMatrix, glm::vec3(0.1f));
+        modelShader.setMat4("model", wallModelMatrix);
+        wallModel.Draw(modelShader);
+
+        // --- Dibuja la entrada ---
+        glm::mat4 entranceMatrix = glm::mat4(1.0f);
+        entranceMatrix = glm::translate(entranceMatrix, glm::vec3(3.0f, -0.5f, 25.0f));
+        entranceMatrix = glm::scale(entranceMatrix, glm::vec3(0.1f));
+        modelShader.setMat4("model", entranceMatrix);
+        entranceModel.Draw(modelShader);
+
+        // === Dibujar piso ===
+        lightingShader.Use();  // <<-- ACTIVAR de nuevo el shader del piso aquí
+
+        lightingShader.setMat4("view", view);
+        lightingShader.setMat4("projection", projection);
+
+        glm::mat4 floorModel = glm::mat4(1.0f);
+        lightingShader.setMat4("model", floorModel);
+
         // --- Configurar luces y material ---
         lightingShader.setVec3("viewPos", camera.GetPosition());
         lightingShader.setVec3("light.position", lightPos);
@@ -272,7 +301,6 @@ int main()
         lightingShader.setVec3("material.diffuse", glm::vec3(1.0f));
         lightingShader.setVec3("material.specular", glm::vec3(0.5f));
         lightingShader.setFloat("material.shininess", 32.0f);
-
         lightingShader.setInt("texture_diffuse", 0);
 
         // --- Activar textura del piso ---
@@ -340,8 +368,8 @@ void DoMovement()
         if (rot > -90.0f)
             rot -= 0.1f;
     }
-    if (camera.GetPosition().y < 0.0f)
-        camera = Camera(glm::vec3(camera.GetPosition().x, 0.0f, camera.GetPosition().z));
+   /* if (camera.GetPosition().y < 0.0f)
+        camera = Camera(glm::vec3(camera.GetPosition().x, 0.0f, camera.GetPosition().z));*/
 }
 
 // Is called whenever a key is pressed/released via GLFW
