@@ -28,6 +28,7 @@ int SCREEN_WIDTH, SCREEN_HEIGHT;
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void MouseCallback(GLFWwindow* window, double xPos, double yPos);
 void DoMovement();
+void AnimationRhino();
 unsigned int loadCubemap(std::vector<std::string> faces);
 
 // Camera
@@ -46,6 +47,112 @@ GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 float rot = 0.0f;
 bool activanim = false;
+
+// ===== ANIMACIÓN DEL RINOCERONTE =====
+float rotRhino = 0.0f;
+float rhinoFLegs = 0.0f;
+float rhinoBLegs = 0.0f;
+float rhinoHead = 0.0f;
+float rhinoPosX = 0.0f;
+float rhinoPosY = -0.5f;
+float rhinoPosZ = -5.0f;
+
+// DEBUG: Ajuste de pivotes
+float headPivotX = 0.0f, headPivotY = 0.15f, headPivotZ = 0.45f;
+float legPivotX = 0.15f, legPivotY = -0.05f, legPivotZ = 0.25f;
+
+#define MAX_FRAMES_RHINO 9
+int i_max_steps_rhino = 190;
+int i_curr_steps_rhino = 0;
+
+typedef struct _frameRhino {
+  float rotRhino, rotRhinoInc;
+    float rhinoPosX;
+    float rhinoPosY;
+    float rhinoPosZ;
+    float incX;
+    float incY;
+    float incZ;
+    float rhinoHead;
+    float rhinoHeadInc;
+    float rhinoFLegs;
+    float rhinoFLegsInc;
+    float rhinoBLegs;
+    float rhinoBLegsInc;
+} FRAME_RHINO;
+
+FRAME_RHINO KeyFrameRhino[MAX_FRAMES_RHINO];
+int FrameIndexRhino = 0;
+bool playRhino = false;
+int playIndexRhino = 0;
+
+void saveFrameRhino(void)
+{
+    printf("Rhino KeyFrame %d guardado\n", FrameIndexRhino);
+    KeyFrameRhino[FrameIndexRhino].rhinoPosX = rhinoPosX;
+    KeyFrameRhino[FrameIndexRhino].rhinoPosY = rhinoPosY;
+    KeyFrameRhino[FrameIndexRhino].rhinoPosZ = rhinoPosZ;
+    KeyFrameRhino[FrameIndexRhino].rotRhino = rotRhino;
+    KeyFrameRhino[FrameIndexRhino].rhinoHead = rhinoHead;
+    KeyFrameRhino[FrameIndexRhino].rhinoFLegs = rhinoFLegs;
+    KeyFrameRhino[FrameIndexRhino].rhinoBLegs = rhinoBLegs;
+    FrameIndexRhino++;
+}
+
+void resetElementsRhino(void)
+{
+    rhinoPosX = KeyFrameRhino[0].rhinoPosX;
+    rhinoPosY = KeyFrameRhino[0].rhinoPosY;
+    rhinoPosZ = KeyFrameRhino[0].rhinoPosZ;
+    rotRhino = KeyFrameRhino[0].rotRhino;
+    rhinoHead = KeyFrameRhino[0].rhinoHead;
+    rhinoFLegs = KeyFrameRhino[0].rhinoFLegs;
+    rhinoBLegs = KeyFrameRhino[0].rhinoBLegs;
+}
+
+void interpolationRhino(void)
+{
+    KeyFrameRhino[playIndexRhino].incX = (KeyFrameRhino[playIndexRhino + 1].rhinoPosX - KeyFrameRhino[playIndexRhino].rhinoPosX) / i_max_steps_rhino;
+    KeyFrameRhino[playIndexRhino].incY = (KeyFrameRhino[playIndexRhino + 1].rhinoPosY - KeyFrameRhino[playIndexRhino].rhinoPosY) / i_max_steps_rhino;
+    KeyFrameRhino[playIndexRhino].incZ = (KeyFrameRhino[playIndexRhino + 1].rhinoPosZ - KeyFrameRhino[playIndexRhino].rhinoPosZ) / i_max_steps_rhino;
+    KeyFrameRhino[playIndexRhino].rotRhinoInc = (KeyFrameRhino[playIndexRhino + 1].rotRhino - KeyFrameRhino[playIndexRhino].rotRhino) / i_max_steps_rhino;
+    KeyFrameRhino[playIndexRhino].rhinoHeadInc = (KeyFrameRhino[playIndexRhino + 1].rhinoHead - KeyFrameRhino[playIndexRhino].rhinoHead) / i_max_steps_rhino;
+    KeyFrameRhino[playIndexRhino].rhinoFLegsInc = (KeyFrameRhino[playIndexRhino + 1].rhinoFLegs - KeyFrameRhino[playIndexRhino].rhinoFLegs) / i_max_steps_rhino;
+    KeyFrameRhino[playIndexRhino].rhinoBLegsInc = (KeyFrameRhino[playIndexRhino + 1].rhinoBLegs - KeyFrameRhino[playIndexRhino].rhinoBLegs) / i_max_steps_rhino;
+}
+
+void AnimationRhino()
+{
+    if (playRhino)
+    {
+        if (i_curr_steps_rhino >= i_max_steps_rhino)
+     {
+            playIndexRhino++;
+            if (playIndexRhino > FrameIndexRhino - 2)
+         {
+       printf("Animacion terminada\n");
+                playIndexRhino = 0;
+      playRhino = false;
+   }
+     else
+  {
+   i_curr_steps_rhino = 0;
+           interpolationRhino();
+    }
+        }
+      else
+        {
+            rhinoPosX += KeyFrameRhino[playIndexRhino].incX;
+            rhinoPosY += KeyFrameRhino[playIndexRhino].incY;
+            rhinoPosZ += KeyFrameRhino[playIndexRhino].incZ;
+            rotRhino += KeyFrameRhino[playIndexRhino].rotRhinoInc;
+            rhinoHead += KeyFrameRhino[playIndexRhino].rhinoHeadInc;
+            rhinoFLegs += KeyFrameRhino[playIndexRhino].rhinoFLegsInc;
+            rhinoBLegs += KeyFrameRhino[playIndexRhino].rhinoBLegsInc;
+            i_curr_steps_rhino++;
+        }
+    }
+}
 
 int main()
 {
@@ -119,7 +226,32 @@ int main()
     glUniform1i(glGetUniformLocation(skyboxShader.Program, "skybox"), 0);
 
     // Load models
-    //Model red_dog((char*)"Models/DOG/RedDog.obj");
+    Model rhinoModel((char*)"Models/uploads_files_5014602_Rhino_Quad.obj");
+    Model BodyRhino((char*)"Models/BodyRhino.obj");
+    Model HeadRhino((char*)"Models/HeadRhino.obj");
+    Model B_LeftLegRhino((char*)"Models/B_LeftLegRhino.obj");
+    Model B_RightLegRhino((char*)"Models/B_RightLegRhino.obj");
+    Model F_LeftLegRhino((char*)"Models/F_LeftLegRhino.obj");
+    Model F_RightLegRhino((char*)"Models/F_RightLegRhino.obj");
+
+    // Inicializar KeyFrames del rinoceronte
+    for (int i = 0; i < MAX_FRAMES_RHINO; i++)
+    {
+        KeyFrameRhino[i].rhinoPosX = 0;
+        KeyFrameRhino[i].rhinoPosY = -0.5f;
+        KeyFrameRhino[i].rhinoPosZ = -5.0f;
+        KeyFrameRhino[i].incX = 0;
+        KeyFrameRhino[i].incY = 0;
+        KeyFrameRhino[i].incZ = 0;
+        KeyFrameRhino[i].rotRhino = 0;
+        KeyFrameRhino[i].rotRhinoInc = 0;
+        KeyFrameRhino[i].rhinoHead = 0;
+        KeyFrameRhino[i].rhinoHeadInc = 0;
+        KeyFrameRhino[i].rhinoFLegs = 0;
+        KeyFrameRhino[i].rhinoFLegsInc = 0;
+        KeyFrameRhino[i].rhinoBLegs = 0;
+        KeyFrameRhino[i].rhinoBLegsInc = 0;
+    }
 
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
@@ -246,6 +378,7 @@ int main()
 
         glfwPollEvents();
         DoMovement();
+        AnimationRhino();
 
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -283,6 +416,60 @@ int main()
         glBindVertexArray(floorVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
+
+        // === Dibujar Rinoceronte ===
+        modelShader.Use();
+        modelShader.setMat4("view", view);
+        modelShader.setMat4("projection", projection);
+
+        // CUERPO (BASE)
+        glm::mat4 modelTemp = glm::mat4(1.0f);
+        modelTemp = glm::translate(modelTemp, glm::vec3(rhinoPosX, rhinoPosY, rhinoPosZ));
+        modelTemp = glm::rotate(modelTemp, glm::radians(rotRhino), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = modelTemp;
+        modelShader.setMat4("model", model);
+        BodyRhino.Draw(modelShader);
+
+        // CABEZA
+        model = modelTemp;
+        model = glm::translate(model, glm::vec3(headPivotX, headPivotY, headPivotZ));
+        model = glm::rotate(model, glm::radians(rhinoHead), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::translate(model, glm::vec3(-headPivotX, -headPivotY, -headPivotZ));
+        modelShader.setMat4("model", model);
+        HeadRhino.Draw(modelShader);
+
+        // PATA DELANTERA IZQUIERDA
+        model = modelTemp;
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(rhinoFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+        //model = glm::translate(model, glm::vec3(-0.15f, 0.05f, -0.25f));
+        modelShader.setMat4("model", model);
+        F_LeftLegRhino.Draw(modelShader);
+
+        // PATA DELANTERA DERECHA
+        model = modelTemp;
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(-rhinoFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+        //model = glm::translate(model, glm::vec3(0.15f, 0.05f, -0.25f));
+        modelShader.setMat4("model", model);
+        F_RightLegRhino.Draw(modelShader);
+
+        // PATA TRASERA IZQUIERDA
+        model = modelTemp;
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(-rhinoBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+        //model = glm::translate(model, glm::vec3(-0.15f, 0.05f, 0.25f));
+        modelShader.setMat4("model", model);
+        B_LeftLegRhino.Draw(modelShader);
+
+        // PATA TRASERA DERECHA
+        model = modelTemp;
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(rhinoBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+        //model = glm::translate(model, glm::vec3(0.15f, 0.05f, 0.25f));
+        modelShader.setMat4("model", model);
+        B_RightLegRhino.Draw(modelShader);
+
 
         // === Dibujar Skybox ===
         glDepthFunc(GL_LEQUAL);
@@ -335,6 +522,32 @@ void DoMovement()
         camera.ProcessKeyboard(RIGHT, deltaTime);
     }
 
+    // Rhino controls
+    if (keys[GLFW_KEY_2])
+        rotRhino += 0.1f;
+    if (keys[GLFW_KEY_3])
+        rotRhino -= 0.1f;
+    if (keys[GLFW_KEY_4])
+        rhinoHead += 0.1f;
+    if (keys[GLFW_KEY_5])
+        rhinoHead -= 0.1f;
+    if (keys[GLFW_KEY_6])
+        rhinoFLegs += 0.1f;
+    if (keys[GLFW_KEY_7])
+        rhinoFLegs -= 0.1f;
+    if (keys[GLFW_KEY_8])
+        rhinoBLegs += 0.1f;
+    if (keys[GLFW_KEY_9])
+        rhinoBLegs -= 0.1f;
+    if (keys[GLFW_KEY_H])
+        rhinoPosZ += 0.01f;
+    if (keys[GLFW_KEY_Y])
+        rhinoPosZ -= 0.01f;
+    if (keys[GLFW_KEY_G])
+        rhinoPosX -= 0.01f;
+    if (keys[GLFW_KEY_J])
+        rhinoPosX += 0.01f;
+
     if (activanim)
     {
         if (rot > -90.0f)
@@ -366,25 +579,42 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 
     if (keys[GLFW_KEY_O])
     {
-       
+     
         movelightPos += 0.1f;
     }
 
-    if (keys[GLFW_KEY_L])
-    {
-        
-        movelightPos -= 0.1f;
-    }
     if (keys[GLFW_KEY_I])
-    {
+  {
 
         movelightPos1 += 0.1f;
     }
 
-    if (keys[GLFW_KEY_K])
+    // Guardar KeyFrame (K)
+    if (keys[GLFW_KEY_K] && action == GLFW_PRESS)
     {
+        if (FrameIndexRhino < MAX_FRAMES_RHINO)
+        {
+            saveFrameRhino();
+        }
+    }
 
-        movelightPos1 -= 0.1f;
+    // Reproducir Animación (L)
+    if (keys[GLFW_KEY_L] && action == GLFW_PRESS)
+    {
+        if (playRhino == false && (FrameIndexRhino > 1))
+      {
+            resetElementsRhino();
+            interpolationRhino();
+            playRhino = true;
+            playIndexRhino = 0;
+            i_curr_steps_rhino = 0;
+            std::cout << "Reproduciendo animacion..." << std::endl;
+   }
+    else
+        {
+            playRhino = false;
+            std::cout << "Animacion pausada" << std::endl;
+}
     }
 }
 
