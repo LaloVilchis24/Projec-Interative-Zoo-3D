@@ -29,6 +29,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 void MouseCallback(GLFWwindow* window, double xPos, double yPos);
 void DoMovement();
 void AnimationRhino();
+void AnimationZebra();
 unsigned int loadCubemap(std::vector<std::string> faces);
 
 // Camera
@@ -48,7 +49,7 @@ GLfloat lastFrame = 0.0f;
 float rot = 0.0f;
 bool activanim = false;
 
-// ===== ANIMACIÓN DEL RINOCERONTE =====
+//ANIMACIÓN DEL RINOCERONTE
 float rotRhino = 0.0f;
 float rhinoFLegs = 0.0f;
 float rhinoBLegs = 0.0f;
@@ -57,16 +58,30 @@ float rhinoPosX = 0.0f;
 float rhinoPosY = -0.5f;
 float rhinoPosZ = -5.0f;
 
-// DEBUG: Ajuste de pivotes
+//Ajuste de pivotes
 float headPivotX = 0.0f, headPivotY = 0.15f, headPivotZ = 0.45f;
 float legPivotX = 0.15f, legPivotY = -0.05f, legPivotZ = 0.25f;
+
+//ANIMACIÓN DE LA ZEBRA
+float rotZebra = 0.0f;
+float zebraFLegs = 0.0f;
+float zebraBLegs = 0.0f;
+float zebraHead = 0.0f;
+float zebraTail = 0.0f;
+float zebraPosX = -4.0f;
+float zebraPosY = -0.5f;
+float zebraPosZ = 2.0f;
+
+//Ajuste de pivotes zebra
+float zebraHeadPivotX = 0.0f, zebraHeadPivotY = 0.15f, zebraHeadPivotZ = 0.45f;
+float zebraTailPivotX = 0.0f, zebraTailPivotY = 0.1f, zebraTailPivotZ = -0.3f;
 
 #define MAX_FRAMES_RHINO 9
 int i_max_steps_rhino = 190;
 int i_curr_steps_rhino = 0;
 
 typedef struct _frameRhino {
-  float rotRhino, rotRhinoInc;
+    float rotRhino, rotRhinoInc;
     float rhinoPosX;
     float rhinoPosY;
     float rhinoPosZ;
@@ -78,7 +93,7 @@ typedef struct _frameRhino {
     float rhinoFLegs;
     float rhinoFLegsInc;
     float rhinoBLegs;
-    float rhinoBLegsInc;
+  float rhinoBLegsInc;
 } FRAME_RHINO;
 
 FRAME_RHINO KeyFrameRhino[MAX_FRAMES_RHINO];
@@ -125,31 +140,130 @@ void AnimationRhino()
 {
     if (playRhino)
     {
-        if (i_curr_steps_rhino >= i_max_steps_rhino)
+      if (i_curr_steps_rhino >= i_max_steps_rhino)
      {
-            playIndexRhino++;
-            if (playIndexRhino > FrameIndexRhino - 2)
+    playIndexRhino++;
+  if (playIndexRhino > FrameIndexRhino - 2)
          {
-       printf("Animacion terminada\n");
-                playIndexRhino = 0;
+ printf("Animacion terminada\n");
+ playIndexRhino = 0;
       playRhino = false;
    }
      else
   {
    i_curr_steps_rhino = 0;
-           interpolationRhino();
+       interpolationRhino();
     }
         }
       else
         {
-            rhinoPosX += KeyFrameRhino[playIndexRhino].incX;
+       rhinoPosX += KeyFrameRhino[playIndexRhino].incX;
             rhinoPosY += KeyFrameRhino[playIndexRhino].incY;
-            rhinoPosZ += KeyFrameRhino[playIndexRhino].incZ;
+       rhinoPosZ += KeyFrameRhino[playIndexRhino].incZ;
             rotRhino += KeyFrameRhino[playIndexRhino].rotRhinoInc;
-            rhinoHead += KeyFrameRhino[playIndexRhino].rhinoHeadInc;
-            rhinoFLegs += KeyFrameRhino[playIndexRhino].rhinoFLegsInc;
-            rhinoBLegs += KeyFrameRhino[playIndexRhino].rhinoBLegsInc;
+      rhinoHead += KeyFrameRhino[playIndexRhino].rhinoHeadInc;
+          rhinoFLegs += KeyFrameRhino[playIndexRhino].rhinoFLegsInc;
+       rhinoBLegs += KeyFrameRhino[playIndexRhino].rhinoBLegsInc;
             i_curr_steps_rhino++;
+}
+    }
+}
+
+#define MAX_FRAMES_ZEBRA 9
+int i_max_steps_zebra = 190;
+int i_curr_steps_zebra = 0;
+
+typedef struct _frameZebra {
+    float rotZebra, rotZebraInc;
+    float zebraPosX;
+    float zebraPosY;
+    float zebraPosZ;
+    float incX;
+    float incY;
+    float incZ;
+    float zebraHead;
+    float zebraHeadInc;
+    float zebraFLegs;
+    float zebraFLegsInc;
+    float zebraBLegs;
+    float zebraBLegsInc;
+    float zebraTail;
+    float zebraTailInc;
+} FRAME_ZEBRA;
+
+FRAME_ZEBRA KeyFrameZebra[MAX_FRAMES_ZEBRA];
+int FrameIndexZebra = 0;
+bool playZebra = false;
+int playIndexZebra = 0;
+
+void saveFrameZebra(void)
+{
+    printf("Zebra KeyFrame %d guardado\n", FrameIndexZebra);
+    KeyFrameZebra[FrameIndexZebra].zebraPosX = zebraPosX;
+    KeyFrameZebra[FrameIndexZebra].zebraPosY = zebraPosY;
+    KeyFrameZebra[FrameIndexZebra].zebraPosZ = zebraPosZ;
+    KeyFrameZebra[FrameIndexZebra].rotZebra = rotZebra;
+    KeyFrameZebra[FrameIndexZebra].zebraHead = zebraHead;
+    KeyFrameZebra[FrameIndexZebra].zebraFLegs = zebraFLegs;
+    KeyFrameZebra[FrameIndexZebra].zebraBLegs = zebraBLegs;
+    KeyFrameZebra[FrameIndexZebra].zebraTail = zebraTail;
+    FrameIndexZebra++;
+}
+
+void resetElementsZebra(void)
+{
+    zebraPosX = KeyFrameZebra[0].zebraPosX;
+    zebraPosY = KeyFrameZebra[0].zebraPosY;
+    zebraPosZ = KeyFrameZebra[0].zebraPosZ;
+    rotZebra = KeyFrameZebra[0].rotZebra;
+    zebraHead = KeyFrameZebra[0].zebraHead;
+    zebraFLegs = KeyFrameZebra[0].zebraFLegs;
+    zebraBLegs = KeyFrameZebra[0].zebraBLegs;
+    zebraTail = KeyFrameZebra[0].zebraTail;
+}
+
+void interpolationZebra(void)
+{
+    KeyFrameZebra[playIndexZebra].incX = (KeyFrameZebra[playIndexZebra + 1].zebraPosX - KeyFrameZebra[playIndexZebra].zebraPosX) / i_max_steps_zebra;
+    KeyFrameZebra[playIndexZebra].incY = (KeyFrameZebra[playIndexZebra + 1].zebraPosY - KeyFrameZebra[playIndexZebra].zebraPosY) / i_max_steps_zebra;
+    KeyFrameZebra[playIndexZebra].incZ = (KeyFrameZebra[playIndexZebra + 1].zebraPosZ - KeyFrameZebra[playIndexZebra].zebraPosZ) / i_max_steps_zebra;
+    KeyFrameZebra[playIndexZebra].rotZebraInc = (KeyFrameZebra[playIndexZebra + 1].rotZebra - KeyFrameZebra[playIndexZebra].rotZebra) / i_max_steps_zebra;
+    KeyFrameZebra[playIndexZebra].zebraHeadInc = (KeyFrameZebra[playIndexZebra + 1].zebraHead - KeyFrameZebra[playIndexZebra].zebraHead) / i_max_steps_zebra;
+    KeyFrameZebra[playIndexZebra].zebraFLegsInc = (KeyFrameZebra[playIndexZebra + 1].zebraFLegs - KeyFrameZebra[playIndexZebra].zebraFLegs) / i_max_steps_zebra;
+    KeyFrameZebra[playIndexZebra].zebraBLegsInc = (KeyFrameZebra[playIndexZebra + 1].zebraBLegs - KeyFrameZebra[playIndexZebra].zebraBLegs) / i_max_steps_zebra;
+    KeyFrameZebra[playIndexZebra].zebraTailInc = (KeyFrameZebra[playIndexZebra + 1].zebraTail - KeyFrameZebra[playIndexZebra].zebraTail) / i_max_steps_zebra;
+}
+
+void AnimationZebra()
+{
+    if (playZebra)
+  {
+    if (i_curr_steps_zebra >= i_max_steps_zebra)
+  {
+     playIndexZebra++;
+   if (playIndexZebra > FrameIndexZebra - 2)
+            {
+                printf("Animacion Zebra terminada\n");
+           playIndexZebra = 0;
+          playZebra = false;
+    }
+    else
+      {
+        i_curr_steps_zebra = 0;
+          interpolationZebra();
+          }
+        }
+        else
+        {
+            zebraPosX += KeyFrameZebra[playIndexZebra].incX;
+     zebraPosY += KeyFrameZebra[playIndexZebra].incY;
+            zebraPosZ += KeyFrameZebra[playIndexZebra].incZ;
+            rotZebra += KeyFrameZebra[playIndexZebra].rotZebraInc;
+            zebraHead += KeyFrameZebra[playIndexZebra].zebraHeadInc;
+       zebraFLegs += KeyFrameZebra[playIndexZebra].zebraFLegsInc;
+zebraBLegs += KeyFrameZebra[playIndexZebra].zebraBLegsInc;
+            zebraTail += KeyFrameZebra[playIndexZebra].zebraTailInc;
+            i_curr_steps_zebra++;
         }
     }
 }
@@ -177,7 +291,6 @@ int main()
     }
 
     glfwMakeContextCurrent(window);
-
     glfwGetFramebufferSize(window, &SCREEN_WIDTH, &SCREEN_HEIGHT);
 
     // Set the required callback functions
@@ -185,7 +298,7 @@ int main()
     glfwSetCursorPosCallback(window, MouseCallback);
 
     // GLFW Options
-    glfwSetInputMode( window, GLFW_CURSOR, GLFW_CURSOR_DISABLED );
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions
     glewExperimental = GL_TRUE;
@@ -208,31 +321,54 @@ int main()
     Shader lightingShader("Shader/lighting.vs", "Shader/lighting.frag");
     Shader skyboxShader("Shader/skybox.vs", "Shader/skybox.frag");
 
-    // Rutas (ajusta estas rutas a donde hayas guardado tus 6 imágenes)
+    // Rutas del skybox
     std::vector<std::string> faces{
         "images/Skybox/humble_lf.jpg",
         "images/Skybox/humble_rt.jpg",
         "images/Skybox/humble_up.jpg",
         "images/Skybox/humble_dn.jpg",
         "images/Skybox/humble_ft.jpg",
-        "images/Skybox/humble_bk.jpg",        
+        "images/Skybox/humble_bk.jpg",
     };
 
     // Cargar cubemap
     unsigned int cubemapTexture = loadCubemap(faces);
 
-    // Asignar el sampler (opcional, depende de tu clase Shader; si tienes setInt o similar)
+    // Asignar el sampler
     skyboxShader.Use();
     glUniform1i(glGetUniformLocation(skyboxShader.Program, "skybox"), 0);
 
-    // Load models
-    Model rhinoModel((char*)"Models/uploads_files_5014602_Rhino_Quad.obj");
-    Model BodyRhino((char*)"Models/BodyRhino.obj");
-    Model HeadRhino((char*)"Models/HeadRhino.obj");
-    Model B_LeftLegRhino((char*)"Models/B_LeftLegRhino.obj");
-    Model B_RightLegRhino((char*)"Models/B_RightLegRhino.obj");
-    Model F_LeftLegRhino((char*)"Models/F_LeftLegRhino.obj");
-    Model F_RightLegRhino((char*)"Models/F_RightLegRhino.obj");
+    //Rinoceronte
+    Model BodyRhino((char*)"Models/Rhino/BodyRhino.obj");
+    Model HeadRhino((char*)"Models/Rhino/HeadRhino.obj");
+    Model B_LeftLegRhino((char*)"Models/Rhino/B_LeftLegRhino.obj");
+    Model B_RightLegRhino((char*)"Models/Rhino/B_RightLegRhino.obj");
+    Model F_LeftLegRhino((char*)"Models/Rhino/F_LeftLegRhino.obj");
+    Model F_RightLegRhino((char*)"Models/Rhino/F_RightLegRhino.obj");
+
+    //Leon
+    Model LionModel((char*)"Models/Lion/uploads_files_5354356_model.obj");
+
+	//Sebra
+    //Model ZebraModel((char*)"Models/Zebra/uploads_files_5014568_Zebra_Quad.obj");
+    Model BodyZebra((char*)"Models/Zebra/BodyZebra.obj");
+    Model HeadZebra((char*)"Models/Zebra/HeadZebra.obj");
+    Model B_LeftLegZebra((char*)"Models/Zebra/B_LeftLegZebra.obj");
+    Model B_RightLegZebra((char*)"Models/Zebra/B_RightLegZebra.obj");
+    Model F_LeftLegZebra((char*)"Models/Zebra/F_LeftLegZebra.obj");
+    Model F_RightLegZebra((char*)"Models/Zebra/F_RightLegZebra.obj");
+    Model TailZebra((char*)"Models/Zebra/TailZebra.obj");
+
+    //Oso
+    Model BearModel((char*)"Models/Bear/bear.bland.obj");
+
+    //Venado
+    Model DeerModel((char*)"Models/Deer/uploads_files_5014765_Deer_Quad.obj");
+
+    //Lobo
+    Model WolfModel((char*)"Models/Wolf/uploads_files_5222363_model.obj");
+
+    
     
     // Modelos de escenario
     Model wallModel((char*)"Models/Pared/fence.obj");
@@ -242,26 +378,46 @@ int main()
     for (int i = 0; i < MAX_FRAMES_RHINO; i++)
     {
         KeyFrameRhino[i].rhinoPosX = 0;
-        KeyFrameRhino[i].rhinoPosY = -0.5f;
+  KeyFrameRhino[i].rhinoPosY = -0.5f;
         KeyFrameRhino[i].rhinoPosZ = -5.0f;
-        KeyFrameRhino[i].incX = 0;
+    KeyFrameRhino[i].incX = 0;
         KeyFrameRhino[i].incY = 0;
-        KeyFrameRhino[i].incZ = 0;
-        KeyFrameRhino[i].rotRhino = 0;
+ KeyFrameRhino[i].incZ = 0;
+    KeyFrameRhino[i].rotRhino = 0;
         KeyFrameRhino[i].rotRhinoInc = 0;
         KeyFrameRhino[i].rhinoHead = 0;
-        KeyFrameRhino[i].rhinoHeadInc = 0;
+   KeyFrameRhino[i].rhinoHeadInc = 0;
         KeyFrameRhino[i].rhinoFLegs = 0;
         KeyFrameRhino[i].rhinoFLegsInc = 0;
         KeyFrameRhino[i].rhinoBLegs = 0;
         KeyFrameRhino[i].rhinoBLegsInc = 0;
     }
 
+    // Inicializar KeyFrames de la zebra
+    for (int i = 0; i < MAX_FRAMES_ZEBRA; i++)
+    {
+        KeyFrameZebra[i].zebraPosX = -4.0f;
+     KeyFrameZebra[i].zebraPosY = -0.5f;
+ KeyFrameZebra[i].zebraPosZ = 2.0f;
+        KeyFrameZebra[i].incX = 0;
+        KeyFrameZebra[i].incY = 0;
+        KeyFrameZebra[i].incZ = 0;
+        KeyFrameZebra[i].rotZebra = 0;
+        KeyFrameZebra[i].rotZebraInc = 0;
+        KeyFrameZebra[i].zebraHead = 0;
+ KeyFrameZebra[i].zebraHeadInc = 0;
+    KeyFrameZebra[i].zebraFLegs = 0;
+   KeyFrameZebra[i].zebraFLegsInc = 0;
+        KeyFrameZebra[i].zebraBLegs = 0;
+        KeyFrameZebra[i].zebraBLegsInc = 0;
+  KeyFrameZebra[i].zebraTail = 0;
+        KeyFrameZebra[i].zebraTailInc = 0;
+    }
+
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
-    // --- SKYBOX setup --- (pegar aquí, después de projection)
+    // Skybox setup
     float skyboxVertices[] = {
-        // positions
         -1.0f,  1.0f, -1.0f,
         -1.0f, -1.0f, -1.0f,
          1.0f, -1.0f, -1.0f,
@@ -272,13 +428,13 @@ int main()
         -1.0f, -1.0f,  1.0f,
         -1.0f, -1.0f, -1.0f,
         -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
+        -1.0f,1.0f, -1.0f,
         -1.0f,  1.0f,  1.0f,
         -1.0f, -1.0f,  1.0f,
 
          1.0f, -1.0f, -1.0f,
          1.0f, -1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,1.0f,
          1.0f,  1.0f,  1.0f,
          1.0f,  1.0f, -1.0f,
          1.0f, -1.0f, -1.0f,
@@ -316,7 +472,6 @@ int main()
     glBindVertexArray(0);
 
     float floorVertices[] = {
-        // posiciones             // normales         // texturas (ahora repite más)
          100.0f, -0.5f,  100.0f,   0.0f, 1.0f, 0.0f,   100.0f, 0.0f,
         -100.0f, -0.5f,  100.0f,   0.0f, 1.0f, 0.0f,   0.0f,   0.0f,
         -100.0f, -0.5f, -100.0f,   0.0f, 1.0f, 0.0f,   0.0f,   100.0f,
@@ -326,7 +481,7 @@ int main()
          100.0f, -0.5f, -100.0f,   0.0f, 1.0f, 0.0f,   100.0f, 100.0f
     };
 
-    unsigned int floorVAO, floorVBO;
+unsigned int floorVAO, floorVBO;
     glGenVertexArrays(1, &floorVAO);
     glGenBuffers(1, &floorVBO);
     glBindVertexArray(floorVAO);
@@ -334,13 +489,10 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, floorVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(floorVertices), floorVertices, GL_STATIC_DRAW);
 
-    // posiciones
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    // normales
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-    // coordenadas de textura
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
 
@@ -350,7 +502,6 @@ int main()
     glGenTextures(1, &floorTexture);
     glBindTexture(GL_TEXTURE_2D, floorTexture);
 
-    // parámetros de repetición y filtrado
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -383,11 +534,12 @@ int main()
         glfwPollEvents();
         DoMovement();
         AnimationRhino();
+        AnimationZebra();
 
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // === Dibujar Piso ===
+        //Dibujar Piso
         lightingShader.Use();
 
         glm::mat4 view = camera.GetViewMatrix();
@@ -397,7 +549,6 @@ int main()
         glm::mat4 model = glm::mat4(1.0f);
         lightingShader.setMat4("model", model);
 
-        // --- Configurar luces y material ---
         lightingShader.setVec3("viewPos", camera.GetPosition());
         lightingShader.setVec3("light.position", lightPos);
         lightingShader.setVec3("light.position1", lightPos1);
@@ -412,21 +563,19 @@ int main()
 
         lightingShader.setInt("texture_diffuse", 0);
 
-        // --- Activar textura del piso ---
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, floorTexture);
 
-        // --- Dibujar el plano ---
         glBindVertexArray(floorVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
 
-        // === Dibujar Rinoceronte ===
+        //Dibujar Rinoceronte
         modelShader.Use();
         modelShader.setMat4("view", view);
         modelShader.setMat4("projection", projection);
 
-        // CUERPO (BASE)
+        //Cuerpo
         glm::mat4 modelTemp = glm::mat4(1.0f);
         modelTemp = glm::translate(modelTemp, glm::vec3(rhinoPosX, rhinoPosY, rhinoPosZ));
         modelTemp = glm::rotate(modelTemp, glm::radians(rotRhino), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -434,7 +583,7 @@ int main()
         modelShader.setMat4("model", model);
         BodyRhino.Draw(modelShader);
 
-        // CABEZA
+		//Cabeza
         model = modelTemp;
         model = glm::translate(model, glm::vec3(headPivotX, headPivotY, headPivotZ));
         model = glm::rotate(model, glm::radians(rhinoHead), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -446,7 +595,6 @@ int main()
         model = modelTemp;
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
         model = glm::rotate(model, glm::radians(rhinoFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
-        //model = glm::translate(model, glm::vec3(-0.15f, 0.05f, -0.25f));
         modelShader.setMat4("model", model);
         F_LeftLegRhino.Draw(modelShader);
 
@@ -454,7 +602,6 @@ int main()
         model = modelTemp;
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
         model = glm::rotate(model, glm::radians(-rhinoFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
-        //model = glm::translate(model, glm::vec3(0.15f, 0.05f, -0.25f));
         modelShader.setMat4("model", model);
         F_RightLegRhino.Draw(modelShader);
 
@@ -462,7 +609,6 @@ int main()
         model = modelTemp;
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
         model = glm::rotate(model, glm::radians(-rhinoBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
-        //model = glm::translate(model, glm::vec3(-0.15f, 0.05f, 0.25f));
         modelShader.setMat4("model", model);
         B_LeftLegRhino.Draw(modelShader);
 
@@ -470,27 +616,110 @@ int main()
         model = modelTemp;
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
         model = glm::rotate(model, glm::radians(rhinoBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
-        //model = glm::translate(model, glm::vec3(0.15f, 0.05f, 0.25f));
         modelShader.setMat4("model", model);
         B_RightLegRhino.Draw(modelShader);
 
-        // === Dibujar Pared y Entrada ===
-        // Pared
+        // León
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        modelShader.setMat4("model", model);
+        LionModel.Draw(modelShader);
+
+        // Cebra
+        glm::mat4 modelTempZebra = glm::mat4(1.0f);
+        modelTempZebra = glm::translate(modelTempZebra, glm::vec3(zebraPosX, zebraPosY, zebraPosZ));
+        modelTempZebra = glm::rotate(modelTempZebra, glm::radians(rotZebra), glm::vec3(0.0f, 1.0f, 0.0f));
+        
+  //Cuerpo Zebra
+      model = modelTempZebra;
+        modelShader.setMat4("model", model);
+     BodyZebra.Draw(modelShader);
+
+    //Cabeza Zebra
+        model = modelTempZebra;
+        model = glm::translate(model, glm::vec3(zebraHeadPivotX, zebraHeadPivotY, zebraHeadPivotZ));
+   model = glm::rotate(model, glm::radians(zebraHead), glm::vec3(0.0f, 1.0f, 0.0f));
+ model = glm::translate(model, glm::vec3(-zebraHeadPivotX, -zebraHeadPivotY, -zebraHeadPivotZ));
+        modelShader.setMat4("model", model);
+     HeadZebra.Draw(modelShader);
+
+        // PATA DELANTERA IZQUIERDA Zebra
+ model = modelTempZebra;
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(zebraFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+  modelShader.setMat4("model", model);
+        F_LeftLegZebra.Draw(modelShader);
+
+        // PATA DELANTERA DERECHA Zebra
+        model = modelTempZebra;
+  model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(-zebraFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+        modelShader.setMat4("model", model);
+        F_RightLegZebra.Draw(modelShader);
+
+        // PATA TRASERA IZQUIERDA Zebra
+        model = modelTempZebra;
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(-zebraBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+        modelShader.setMat4("model", model);
+ B_LeftLegZebra.Draw(modelShader);
+
+        // PATA TRASERA DERECHA Zebra
+        model = modelTempZebra;
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+  model = glm::rotate(model, glm::radians(zebraBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+        modelShader.setMat4("model", model);
+        B_RightLegZebra.Draw(modelShader);
+
+   // COLA Zebra
+        model = modelTempZebra;
+        model = glm::translate(model, glm::vec3(zebraTailPivotX, zebraTailPivotY, zebraTailPivotZ));
+        model = glm::rotate(model, glm::radians(zebraTail), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::translate(model, glm::vec3(-zebraTailPivotX, -zebraTailPivotY, -zebraTailPivotZ));
+  modelShader.setMat4("model", model);
+        TailZebra.Draw(modelShader);
+
+
+        //Oso
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, -0.5f, -3.0f));
+        model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.1f));
+        modelShader.setMat4("model", model);
+        BearModel.Draw(modelShader);
+
+        //Ciervo
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, -0.5f, 3.0f));
+        model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.5f));
+        modelShader.setMat4("model", model);
+        DeerModel.Draw(modelShader);
+
+        //Lobo
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+       
+        modelShader.setMat4("model", model);
+        WolfModel.Draw(modelShader);
+
+
+        //Dibujar Pared y Entrada
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, -0.5f, -10.0f));
         model = glm::scale(model, glm::vec3(1.0f));
         modelShader.setMat4("model", model);
         wallModel.Draw(modelShader);
 
-        // Entrada
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(3.0f, -0.5f, 25.0f));
         model = glm::scale(model, glm::vec3(0.1f));
         modelShader.setMat4("model", model);
         entranceModel.Draw(modelShader);
 
-
-        // === Dibujar Skybox ===
+        //Dibujar Skybox
         glDepthFunc(GL_LEQUAL);
         skyboxShader.Use();
 
@@ -508,7 +737,6 @@ int main()
         glfwSwapBuffers(window);
     }
 
-
     glDeleteVertexArrays(1, &floorVAO);
     glDeleteBuffers(1, &floorVBO);
 
@@ -516,14 +744,12 @@ int main()
     return 0;
 }
 
-
-// Moves/alters the camera positions based on user input
 void DoMovement()
 {
-    // Camera controls
-    if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])
+  // Camera controls
+ if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])
     {
-        camera.ProcessKeyboard(FORWARD, deltaTime);
+     camera.ProcessKeyboard(FORWARD, deltaTime);
     }
 
     if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN])
@@ -533,11 +759,11 @@ void DoMovement()
 
     if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])
     {
-        camera.ProcessKeyboard(LEFT, deltaTime);
-    }
+      camera.ProcessKeyboard(LEFT, deltaTime);
+  }
 
     if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT])
-    {
+{
         camera.ProcessKeyboard(RIGHT, deltaTime);
     }
 
@@ -553,7 +779,7 @@ void DoMovement()
     if (keys[GLFW_KEY_6])
         rhinoFLegs += 0.1f;
     if (keys[GLFW_KEY_7])
-        rhinoFLegs -= 0.1f;
+      rhinoFLegs -= 0.1f;
     if (keys[GLFW_KEY_8])
         rhinoBLegs += 0.1f;
     if (keys[GLFW_KEY_9])
@@ -569,71 +795,69 @@ void DoMovement()
 
     if (activanim)
     {
-        if (rot > -90.0f)
-            rot -= 0.1f;
+      if (rot > -90.0f)
+     rot -= 0.1f;
     }
+    
     if (camera.GetPosition().y < 0.0f)
         camera = Camera(glm::vec3(camera.GetPosition().x, 0.0f, camera.GetPosition().z));
 }
 
-// Is called whenever a key is pressed/released via GLFW
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
     if (GLFW_KEY_ESCAPE == key && GLFW_PRESS == action)
     {
-        glfwSetWindowShouldClose(window, GL_TRUE);
+      glfwSetWindowShouldClose(window, GL_TRUE);
     }
 
     if (key >= 0 && key < 1024)
     {
         if (action == GLFW_PRESS)
-        {
-            keys[key] = true;
-        }
+      {
+     keys[key] = true;
+    }
         else if (action == GLFW_RELEASE)
         {
-            keys[key] = false;
+      keys[key] = false;
         }
     }
 
     if (keys[GLFW_KEY_O])
-    {
-     
+{
         movelightPos += 0.1f;
     }
 
     if (keys[GLFW_KEY_I])
-  {
-
+    {
         movelightPos1 += 0.1f;
     }
 
-    // Guardar KeyFrame (K)
+    // Guardar KeyFrame
     if (keys[GLFW_KEY_K] && action == GLFW_PRESS)
     {
         if (FrameIndexRhino < MAX_FRAMES_RHINO)
-        {
-            saveFrameRhino();
-        }
+      {
+     saveFrameRhino();
+    }
     }
 
-    // Reproducir Animación (L)
+    // Reproducir Animación
     if (keys[GLFW_KEY_L] && action == GLFW_PRESS)
     {
         if (playRhino == false && (FrameIndexRhino > 1))
-      {
+        {
             resetElementsRhino();
             interpolationRhino();
             playRhino = true;
             playIndexRhino = 0;
             i_curr_steps_rhino = 0;
             std::cout << "Reproduciendo animacion..." << std::endl;
-   }
-    else
+        }
+        else
         {
             playRhino = false;
             std::cout << "Animacion pausada" << std::endl;
-}
+        }
     }
 }
 
@@ -647,7 +871,7 @@ void MouseCallback(GLFWwindow* window, double xPos, double yPos)
     }
 
     GLfloat xOffset = xPos - lastX;
-    GLfloat yOffset = lastY - yPos;  // Reversed since y-coordinates go from bottom to left
+    GLfloat yOffset = lastY - yPos;
 
     lastX = xPos;
     lastY = yPos;
@@ -667,42 +891,39 @@ unsigned int loadCubemap(std::vector<std::string> faces)
     for (unsigned int i = 0; i < faces.size(); i++)
     {
         unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
-        if (data)
+     if (data)
         {
-            // === ROTACIÓN DE LAS CARAS UP y DOWN ===
-            if (i == 2 || i == 3)  // 2: up, 3: down (según tu orden de faces)
+        if (i == 2 || i == 3)
+          {
+            int channels = nrChannels;
+            unsigned char* rotated = new unsigned char[width * height * channels];
+            for (int y = 0; y < height; ++y)
             {
-                int channels = nrChannels;
-                unsigned char* rotated = new unsigned char[width * height * channels];
-                // Rotar 90° sentido horario
-                for (int y = 0; y < height; ++y)
+                for (int x = 0; x < width; ++x)
                 {
-                    for (int x = 0; x < width; ++x)
-                    {
-                        for (int c = 0; c < channels; ++c)
+                     for (int c = 0; c < channels; ++c)
                         {
-                            rotated[(x * height + (height - y - 1)) * channels + c] =
-                                data[(y * width + x) * channels + c];
+                        rotated[(x * height + (height - y - 1)) * channels + c] =
+                        data[(y * width + x) * channels + c];
                         }
-                    }
                 }
-                stbi_image_free(data);
-                data = rotated;
-                std::swap(width, height); // intercambiar dimensiones tras rotación
             }
+            stbi_image_free(data);
+            data = rotated;
+            std::swap(width, height);
+          }
 
             GLenum format = (nrChannels == 4) ? GL_RGBA : GL_RGB;
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-                0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 
-            delete[] data; // ya usamos new[]
+            delete[] data;
         }
-        else
+else
         {
-            std::cout << "Error al cargar: " << faces[i] << std::endl;
+      std::cout << "Error al cargar: " << faces[i] << std::endl;
             stbi_image_free(data);
-        }
-    }
+   }
+  }
 
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
