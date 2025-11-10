@@ -8,7 +8,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd E:fence_color.png
-map_Ns E:fence_roughness.png
-map_refl E:fence_metalness.png
-map_Bump E:fence/fence_normal.png
+map_Kd fence_color.png
+map_Ns fence_roughness.png
+map_refl fence_metalness.png
+map_Bump -bm 2.000000 fence_normal.png
