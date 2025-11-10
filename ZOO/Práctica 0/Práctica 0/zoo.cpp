@@ -259,7 +259,7 @@ int main()
 
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
-    // --- SKYBOX setup --- (pegar aquí, después de projection)
+    // --- SKYBOX setup --- 
     float skyboxVertices[] = {
         // positions
         -1.0f,  1.0f, -1.0f,
