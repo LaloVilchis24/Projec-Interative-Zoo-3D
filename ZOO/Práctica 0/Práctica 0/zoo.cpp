@@ -20,6 +20,7 @@
 // Other Libs
 #include "SOIL2/SOIL2.h"
 #include "stb_image.h"
+
 // Properties
 const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
@@ -41,7 +42,6 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 bool keys[1024];
 GLfloat lastX = 400, lastY = 300;
 bool firstMouse = true;
-
 
 // Light attributes
 glm::vec3 lightPos(0.5f, 0.5f, 2.5f);
@@ -765,7 +765,6 @@ int main()
 	Model F_RightLegRhino((char*)"Models/Rhino/F_RightLegRhino.obj");
 
 	//Leon
-	//Model LionModel((char*)"Models/Lion/uploads_files_5354356_model.obj");
 	Model BodyLion((char*)"Models/Lion/BodyLion.obj");
 	Model HeadLion((char*)"Models/Lion/HeadLion.obj");
 	Model B_LeftLegLion((char*)"Models/Lion/B_LeftLegLion.obj");
@@ -775,7 +774,6 @@ int main()
 	Model TailLion((char*)"Models/Lion/TailLion.obj");
 
 	//Sebra
-	//Model ZebraModel((char*)"Models/Zebra/uploads_files_5014568_Zebra_Quad.obj");
 	Model BodyZebra((char*)"Models/Zebra/BodyZebra.obj");
 	Model HeadZebra((char*)"Models/Zebra/HeadZebra.obj");
 	Model B_LeftLegZebra((char*)"Models/Zebra/B_LeftLegZebra.obj");
@@ -785,7 +783,6 @@ int main()
 	Model TailZebra((char*)"Models/Zebra/TailZebra.obj");
 
 	//Oso
-	//Model BearModel((char*)"Models/Bear/bear.bland.obj");
 	Model BodyBear((char*)"Models/Bear/BodyBear.obj");
 	Model HeadBear((char*)"Models/Bear/HeadBear.obj");
 	Model B_LeftLegBear((char*)"Models/Bear/B_LeftLegBear.obj");
@@ -794,7 +791,6 @@ int main()
 	Model F_RightLegBear((char*)"Models/Bear/F_RightLegBear.obj");
 
 	//Venado
-	//Model DeerModel((char*)"Models/Deer/uploads_files_5014765_Deer_Quad.obj");
 	Model BodyDeer((char*)"Models/Deer/BodyDeer.obj");
 	Model HeadDeer((char*)"Models/Deer/HeadDeer.obj");
 	Model B_LeftLegDeer((char*)"Models/Deer/B_LeftLegDeer.obj");
@@ -810,7 +806,6 @@ int main()
 	Model F_LeftLegWolf((char*)"Models/Wolf/F_LeftLegWolf.obj");
 	Model F_RightLegWolf((char*)"Models/Wolf/F_RightLegWolf.obj");
 	Model TailWolf((char*)"Models/Wolf/TailWolf.obj");
-
 
 	// Modelos de escenario
 	Model wallModel((char*)"Models/Pared/fence.obj");
@@ -950,13 +945,13 @@ int main()
 		-1.0f, -1.0f,  1.0f,
 		-1.0f, -1.0f, -1.0f,
 		-1.0f,  1.0f, -1.0f,
-		-1.0f,1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
 		-1.0f,  1.0f,  1.0f,
 		-1.0f, -1.0f,  1.0f,
 
 		 1.0f, -1.0f, -1.0f,
 		 1.0f, -1.0f,  1.0f,
-		 1.0f,  1.0f,1.0f,
+		 1.0f,  1.0f,  1.0f,
 		 1.0f,  1.0f,  1.0f,
 		 1.0f,  1.0f, -1.0f,
 		 1.0f, -1.0f, -1.0f,
@@ -1046,6 +1041,100 @@ int main()
 
 	stbi_image_free(data);
 
+	// === Cubo del acuario ===
+	float glassVertices[] = {
+		// posiciones           // normales           // texcoords
+		// Cara frontal
+		-1.0f, -0.5f,  1.0f,     0.0f,  0.0f,  1.0f,   0.0f, 0.0f,
+		 1.0f, -0.5f,  1.0f,     0.0f,  0.0f,  1.0f,   1.0f, 0.0f,
+		 1.0f,  0.5f,  1.0f,     0.0f,  0.0f,  1.0f,   1.0f, 1.0f,
+		 1.0f,  0.5f,  1.0f,     0.0f,  0.0f,  1.0f,   1.0f, 1.0f,
+		-1.0f,  0.5f,  1.0f,     0.0f,  0.0f,  1.0f,   0.0f, 1.0f,
+		-1.0f, -0.5f,  1.0f,     0.0f,  0.0f,  1.0f,   0.0f, 0.0f,
+
+		// Cara trasera
+		-1.0f, -0.5f, -1.0f,     0.0f,  0.0f, -1.0f,   0.0f, 0.0f,
+		 1.0f, -0.5f, -1.0f,     0.0f,  0.0f, -1.0f,   1.0f, 0.0f,
+		 1.0f,  0.5f, -1.0f,     0.0f,  0.0f, -1.0f,   1.0f, 1.0f,
+		 1.0f,  0.5f, -1.0f,     0.0f,  0.0f, -1.0f,   1.0f, 1.0f,
+		-1.0f,  0.5f, -1.0f,     0.0f,  0.0f, -1.0f,   0.0f, 1.0f,
+		-1.0f, -0.5f, -1.0f,     0.0f,  0.0f, -1.0f,   0.0f, 0.0f,
+
+		// Izquierda
+		-1.0f,  0.5f,  1.0f,    -1.0f,  0.0f,  0.0f,   1.0f, 0.0f,
+		-1.0f,  0.5f, -1.0f,    -1.0f,  0.0f,  0.0f,   1.0f, 1.0f,
+		-1.0f, -0.5f, -1.0f,    -1.0f,  0.0f,  0.0f,   0.0f, 1.0f,
+		-1.0f, -0.5f, -1.0f,    -1.0f,  0.0f,  0.0f,   0.0f, 1.0f,
+		-1.0f, -0.5f,  1.0f,    -1.0f,  0.0f,  0.0f,   0.0f, 0.0f,
+		-1.0f,  0.5f,  1.0f,    -1.0f,  0.0f,  0.0f,   1.0f, 0.0f,
+
+		// Derecha
+		 1.0f,  0.5f,  1.0f,     1.0f,  0.0f,  0.0f,   1.0f, 0.0f,
+		 1.0f,  0.5f, -1.0f,     1.0f,  0.0f,  0.0f,   1.0f, 1.0f,
+		 1.0f, -0.5f, -1.0f,     1.0f,  0.0f,  0.0f,   0.0f, 1.0f,
+		 1.0f, -0.5f, -1.0f,     1.0f,  0.0f,  0.0f,   0.0f, 1.0f,
+		 1.0f, -0.5f,  1.0f,     1.0f,  0.0f,  0.0f,   0.0f, 0.0f,
+		 1.0f,  0.5f,  1.0f,     1.0f,  0.0f,  0.0f,   1.0f, 0.0f,
+
+		 // Parte superior
+		 -1.0f,  0.5f, -1.0f,     0.0f,  1.0f,  0.0f,   0.0f, 1.0f,
+		  1.0f,  0.5f, -1.0f,     0.0f,  1.0f,  0.0f,   1.0f, 1.0f,
+		  1.0f,  0.5f,  1.0f,     0.0f,  1.0f,  0.0f,   1.0f, 0.0f,
+		  1.0f,  0.5f,  1.0f,     0.0f,  1.0f,  0.0f,   1.0f, 0.0f,
+		 -1.0f,  0.5f,  1.0f,     0.0f,  1.0f,  0.0f,   0.0f, 0.0f,
+		 -1.0f,  0.5f, -1.0f,     0.0f,  1.0f,  0.0f,   0.0f, 1.0f,
+
+		 // Parte inferior
+		 -1.0f, -0.5f, -1.0f,     0.0f, -1.0f,  0.0f,   0.0f, 1.0f,
+		  1.0f, -0.5f, -1.0f,     0.0f, -1.0f,  0.0f,   1.0f, 1.0f,
+		  1.0f, -0.5f,  1.0f,     0.0f, -1.0f,  0.0f,   1.0f, 0.0f,
+		  1.0f, -0.5f,  1.0f,     0.0f, -1.0f,  0.0f,   1.0f, 0.0f,
+		 -1.0f, -0.5f,  1.0f,     0.0f, -1.0f,  0.0f,   0.0f, 0.0f,
+		 -1.0f, -0.5f, -1.0f,     0.0f, -1.0f,  0.0f,   0.0f, 1.0f
+	};
+
+	unsigned int glassVAO, glassVBO;
+	glGenVertexArrays(1, &glassVAO);
+	glGenBuffers(1, &glassVBO);
+	glBindVertexArray(glassVAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, glassVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glassVertices), glassVertices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+	glBindVertexArray(0);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// --- Textura acuario ---
+	unsigned int waterTexture;
+	glGenTextures(1, &waterTexture);
+	glBindTexture(GL_TEXTURE_2D, waterTexture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	int width1, height1, nrChannels1;
+	unsigned char* data1 = stbi_load("images/water.jpg", &width1, &height1, &nrChannels1, 0);
+	if (data1)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width1, height1, 0, GL_RGB, GL_UNSIGNED_BYTE, data1);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Fallo al cargar textura de agua" << std::endl;
+	}
+	stbi_image_free(data1);
+
 	// Game loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -1076,11 +1165,12 @@ int main()
 		lightingShader.setMat4("model", model);
 
 		lightingShader.setVec3("viewPos", camera.GetPosition());
-		lightingShader.setVec3("light.position", lightPos);
-		lightingShader.setVec3("light.position1", lightPos1);
-		lightingShader.setVec3("light.ambient", glm::vec3(0.3f));
-		lightingShader.setVec3("light.diffuse", glm::vec3(0.7f));
-		lightingShader.setVec3("light.specular", glm::vec3(1.0f));
+
+		// === Luz direccional ===
+		lightingShader.setVec3("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+		lightingShader.setVec3("dirLight.ambient", glm::vec3(0.3f, 0.3f, 0.3f));
+		lightingShader.setVec3("dirLight.diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
+		lightingShader.setVec3("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
 
 		lightingShader.setVec3("material.ambient", glm::vec3(1.0f));
 		lightingShader.setVec3("material.diffuse", glm::vec3(1.0f));
@@ -1272,7 +1362,6 @@ int main()
 		modelShader.setMat4("model", model);
 		B_RightLegDeer.Draw(modelShader);
 
-
 		//Lobo (Wolf)
 		glm::mat4 modelTempWolf = glm::mat4(1.0f);
 		modelTempWolf = glm::translate(modelTempWolf, glm::vec3(wolfPosX, wolfPosY, wolfPosZ));
@@ -1359,19 +1448,219 @@ int main()
 		modelShader.setMat4("model", model);
 		B_RightLegBear.Draw(modelShader);
 
+		//Dibujar Paredes y Entrada (desde el segundo código)
+		modelTemp = glm::mat4(1.0f);
 
-		//Dibujar Pared y Entrada
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -0.5f, -10.0f));
-		model = glm::scale(model, glm::vec3(1.0f));
-		modelShader.setMat4("model", model);
+		// Entrada
+		glm::mat4 ent = modelTemp;
+		ent = glm::translate(ent, glm::vec3(2.8f, -0.55f, 25.5f));
+		ent = glm::scale(ent, glm::vec3(0.1f));
+		modelShader.setMat4("model", ent);
+		entranceModel.Draw(modelShader);
+
+		// Paredes Entrada
+		glm::mat4 wall1 = modelTemp;
+		wall1 = glm::translate(wall1, glm::vec3(12.0f, 0.0f, 25.5f));
+		wall1 = glm::scale(wall1, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall1);
 		wallModel.Draw(modelShader);
 
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(3.0f, -0.5f, 25.0f));
-		model = glm::scale(model, glm::vec3(0.1f));
-		modelShader.setMat4("model", model);
-		entranceModel.Draw(modelShader);
+		glm::mat4 wall2 = modelTemp;
+		wall2 = glm::translate(wall2, glm::vec3(19.0f, 0.0f, 25.5f));
+		wall2 = glm::scale(wall2, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall2);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall8 = modelTemp;
+		wall8 = glm::translate(wall8, glm::vec3(-6.5f, 0.0f, 25.5f));
+		wall8 = glm::scale(wall8, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall8);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall9 = modelTemp;
+		wall9 = glm::translate(wall9, glm::vec3(-13.5f, 0.0f, 25.5f));
+		wall9 = glm::scale(wall9, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall9);
+		wallModel.Draw(modelShader);
+
+		// Paredes Izquierdas
+		glm::mat4 wall3 = modelTemp;
+		wall3 = glm::translate(wall3, glm::vec3(22.5f, 0.0f, 22.0f));
+		wall3 = glm::rotate(wall3, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall3 = glm::scale(wall3, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall3);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall4 = modelTemp;
+		wall4 = glm::translate(wall4, glm::vec3(22.5f, 0.0f, 15.0f));
+		wall4 = glm::rotate(wall4, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall4 = glm::scale(wall4, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall4);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall5 = modelTemp;
+		wall5 = glm::translate(wall5, glm::vec3(22.5f, 0.0f, 8.0f));
+		wall5 = glm::rotate(wall5, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall5 = glm::scale(wall5, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall5);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall6 = modelTemp;
+		wall6 = glm::translate(wall6, glm::vec3(22.5f, 0.0f, 1.0f));
+		wall6 = glm::rotate(wall6, glm::radians(90.5f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall6 = glm::scale(wall6, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall6);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall7 = modelTemp;
+		wall7 = glm::translate(wall7, glm::vec3(22.5f, 0.0f, -6.0f));
+		wall7 = glm::rotate(wall7, glm::radians(90.5f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall7 = glm::scale(wall7, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall7);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall15 = modelTemp;
+		wall15 = glm::translate(wall15, glm::vec3(22.5f, 0.0f, -13.0f));
+		wall15 = glm::rotate(wall15, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall15 = glm::scale(wall15, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall15);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall16 = modelTemp;
+		wall16 = glm::translate(wall16, glm::vec3(22.5f, 0.0f, -20.0f));
+		wall16 = glm::rotate(wall16, glm::radians(90.5f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall16 = glm::scale(wall16, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall16);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall17 = modelTemp;
+		wall17 = glm::translate(wall17, glm::vec3(22.5f, 0.0f, -27.0f));
+		wall17 = glm::rotate(wall17, glm::radians(90.5f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall17 = glm::scale(wall17, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall17);
+		wallModel.Draw(modelShader);
+
+		// Paredes Derechas
+		glm::mat4 wall10 = modelTemp;
+		wall10 = glm::translate(wall10, glm::vec3(-17.0f, 0.0f, 22.0f));
+		wall10 = glm::rotate(wall10, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall10 = glm::scale(wall10, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall10);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall11 = modelTemp;
+		wall11 = glm::translate(wall11, glm::vec3(-17.0f, 0.0f, 15.0f));
+		wall11 = glm::rotate(wall11, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall11 = glm::scale(wall11, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall11);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall12 = modelTemp;
+		wall12 = glm::translate(wall12, glm::vec3(-17.0f, 0.0f, 8.0f));
+		wall12 = glm::rotate(wall12, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall12 = glm::scale(wall12, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall12);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall13 = modelTemp;
+		wall13 = glm::translate(wall13, glm::vec3(-17.0f, 0.0f, 1.0f));
+		wall13 = glm::rotate(wall13, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall13 = glm::scale(wall13, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall13);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall14 = modelTemp;
+		wall14 = glm::translate(wall14, glm::vec3(-17.0f, 0.0f, -6.0f));
+		wall14 = glm::rotate(wall14, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall14 = glm::scale(wall14, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall14);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall18 = modelTemp;
+		wall18 = glm::translate(wall18, glm::vec3(-17.0f, 0.0f, -13.0f));
+		wall18 = glm::rotate(wall18, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall18 = glm::scale(wall18, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall18);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall19 = modelTemp;
+		wall19 = glm::translate(wall19, glm::vec3(-17.0f, 0.0f, -20.0f));
+		wall19 = glm::rotate(wall19, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall19 = glm::scale(wall19, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall19);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall20 = modelTemp;
+		wall20 = glm::translate(wall20, glm::vec3(-17.0f, 0.0f, -27.0f));
+		wall20 = glm::rotate(wall20, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		wall20 = glm::scale(wall20, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall20);
+		wallModel.Draw(modelShader);
+
+		//Paredes del Fondo
+		glm::mat4 wall21 = modelTemp;
+		wall21 = glm::translate(wall21, glm::vec3(12.0f, 0.0f, -30.5f));
+		wall21 = glm::scale(wall21, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall21);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall22 = modelTemp;
+		wall22 = glm::translate(wall22, glm::vec3(19.0f, 0.0f, -30.5f));
+		wall22 = glm::scale(wall22, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall22);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall23 = modelTemp;
+		wall23 = glm::translate(wall23, glm::vec3(-6.5f, 0.0f, -30.5f));
+		wall23 = glm::scale(wall23, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall23);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall24 = modelTemp;
+		wall24 = glm::translate(wall24, glm::vec3(-13.5f, 0.0f, -30.5f));
+		wall24 = glm::scale(wall24, glm::vec3(2.5f));
+		modelShader.setMat4("model", wall24);
+		wallModel.Draw(modelShader);
+
+		glm::mat4 wall25 = modelTemp;
+		wall25 = glm::translate(wall25, glm::vec3(3.5f, 0.0f, -30.5f));
+		wall25 = glm::scale(wall25, glm::vec3(4.0f, 2.5f, 2.5f));
+		modelShader.setMat4("model", wall25);
+		wallModel.Draw(modelShader);
+
+		// === Dibujar acuario con textura de agua ===
+		lightingShader.Use();
+		lightingShader.setMat4("view", view);
+		lightingShader.setMat4("projection", projection);
+
+		// Posición y tamaño del cubo
+		glm::mat4 glassModel = glm::mat4(1.0f);
+		glassModel = glm::translate(glassModel, glm::vec3(0.0f, 0.0f, -25.0f));
+		glassModel = glm::scale(glassModel, glm::vec3(5.0f, 3.0f, 5.0f));
+		lightingShader.setMat4("model", glassModel);
+
+		// Configurar materiales (color base + brillo)
+		lightingShader.setVec3("material.ambient", glm::vec3(0.5f, 0.6f, 0.9f));
+		lightingShader.setVec3("material.diffuse", glm::vec3(0.5f, 0.7f, 1.0f));
+		lightingShader.setVec3("material.specular", glm::vec3(0.8f));
+		lightingShader.setFloat("material.shininess", 16.0f);
+
+		// Transparencia
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		lightingShader.setFloat("opacity", 0.4f);
+
+		// Textura del agua
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, waterTexture);
+		lightingShader.setInt("texture_diffuse", 0);
+
+		// Dibujar cubo del acuario
+		glBindVertexArray(glassVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+
+		glDisable(GL_BLEND);
 
 		//Dibujar Skybox
 		glDepthFunc(GL_LEQUAL);
@@ -1393,6 +1682,8 @@ int main()
 
 	glDeleteVertexArrays(1, &floorVAO);
 	glDeleteBuffers(1, &floorVBO);
+	glDeleteVertexArrays(1, &glassVAO);
+	glDeleteBuffers(1, &glassVBO);
 
 	glfwTerminate();
 	return 0;
@@ -1421,7 +1712,7 @@ void DoMovement()
 		camera.ProcessKeyboard(RIGHT, deltaTime);
 	}
 
-	// Controles unificados para Rhino, Zebra, Wolf, Lion y Deer
+	// Controles unificados para Rhino, Zebra, Wolf, Lion, Deer y Bear
 	if (keys[GLFW_KEY_2])
 	{
 		rotRhino += 0.1f;
@@ -1549,7 +1840,7 @@ void DoMovement()
 	if (activanim)
 	{
 		if (rot > -90.0f)
-			rot -= 0.1;
+			rot -= 0.1f;
 	}
 
 	if (camera.GetPosition().y < 0.0f)
@@ -1646,6 +1937,7 @@ unsigned int loadCubemap(std::vector<std::string> faces)
 		unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
 		if (data)
 		{
+			// === ROTACIÓN DE LAS CARAS UP y DOWN ===
 			if (i == 2 || i == 3)
 			{
 				int channels = nrChannels;
