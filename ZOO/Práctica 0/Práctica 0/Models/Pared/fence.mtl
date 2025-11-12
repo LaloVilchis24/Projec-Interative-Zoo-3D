@@ -1,14 +1,3 @@
-# Blender 3.5.1 MTL File: 'None'
-# www.blender.org
-
-newmtl fence_texture
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd fence_color.png
-map_Ns fence_roughness.png
-map_refl fence_metalness.png
-map_Bump -bm 2.000000 fence_normal.png
+version https://git-lfs.github.com/spec/v1
+oid sha256:18bd1da097858a299704d3a157121cb83d4260f740a624927e6b9b8b1d5a90ef
+size 326

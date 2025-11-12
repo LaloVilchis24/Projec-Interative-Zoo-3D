@@ -1,13 +1,3 @@
-# Blender 4.0.1 MTL File: 'Animal_Remesh joined edited save pred UV ifx po automatizaci.blend'
-# www.blender.org
-
-newmtl Zebra_Quad_Material
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd Textures/Zebra_Quad_Diffuse.png
-map_Ns Textures/Zebra_Quad_Roughness.png
-map_Bump -bm 1.000000 Textures/Zebra_Quad_Normal.png
+version https://git-lfs.github.com/spec/v1
+oid sha256:d36aa48f5c1bd940e31c0bcdf3d5d4e0142aa6d1c6f14e77573e6d7b40c777db
+size 408

@@ -1,12 +1,3 @@
-# Blender 4.5.4 LTS MTL File: 'None'
-# www.blender.org
-
-newmtl Material_0
-Ns 39.999996
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd Textures/Image_0.jpg
+version https://git-lfs.github.com/spec/v1
+oid sha256:6daadb8fe835ec256a423490db66d7047ed76176b81caa3069249a6139d76f3f
+size 248
