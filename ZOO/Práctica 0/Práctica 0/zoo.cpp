@@ -53,6 +53,19 @@ GLfloat lastFrame = 0.0f;
 float rot = 0.0f;
 bool activanim = false;
 
+// === VARIABLES DE MOVIMIENTO DE PECES ===
+float fishSpeed = 0.002f;   // velocidad de movimiento
+float posFishesX = -14.0f; // posición inicial X
+float posFishesZ = -20.0f; // posición inicial Z
+float rotFish = 90.0f;     // rotación inicial (hacia la derecha)
+int fishDir = 0;           // 0 = derecha, 1 = arriba, 2 = izquierda, 3 = abajo
+
+float xMin = -14.0f;
+float xMax = -2.0f;
+float zMin = -24.5f;
+float zMax = -20.0f;
+
+
 //ANIMACIÓN DEL RINOCERONTE
 float rotRhino = 0.0f;
 float rhinoFLegs = 0.0f;
@@ -964,6 +977,19 @@ int main()
 	// Modelos de escenario
 	Model wallModel((char*)"Models/Pared/fence.obj");
 	Model entranceModel((char*)"Models/Entrada/Gate_obj.obj");
+	Model pilar((char*)"Models/EgyptPillar/egypt_pillar.obj");
+	Model reja((char*)"Models/Fence/Wire Fence.obj");
+	Model Tree((char*)"Models/LotofTrees/OBJ_AS11_Chinaberry_1.obj");
+	Model TreeA((char*)"Models/AppleTree/RedDeliciousApple.obj");
+
+	//Modelos del Acuario
+	Model goldFish((char*)"Models/Goldfish/Goldfish_Quad.obj");
+	Model fishG((char*)"Models/FishG/Fish_Quad.obj");
+	Model clownFish((char*)"Models/Clownfish/Clownfish_Quad.obj");
+	Model narwal((char*)"Models/Narwal/Narwal_Quad.obj");
+	Model seaTurtle((char*)"Models/Turtle/Sea_Turtle_Quad.obj");
+	Model seaCrab((char*)"Models/Crab/Sea_Crab_Quad.obj");
+	Model corals((char*)"Models/AlienTubes/AlienTubes.obj");
 
 	// ===== CARGAR ANIMACIÓN PREDEFINIDA DEL RINOCERONTE =====
 	loadPredefinedAnimationRhino();
@@ -1655,81 +1681,81 @@ int main()
 
 		// Paredes Entrada
 		glm::mat4 wall1 = modelTemp;
-		wall1 = glm::translate(wall1, glm::vec3(12.0f, 0.0f, 25.5f));
+		wall1 = glm::translate(wall1, glm::vec3(12.0f, -0.5f, 25.5f));
 		wall1 = glm::scale(wall1, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall1);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall2 = modelTemp;
-		wall2 = glm::translate(wall2, glm::vec3(19.0f, 0.0f, 25.5f));
+		wall2 = glm::translate(wall2, glm::vec3(19.0f, -0.5f, 25.5f));
 		wall2 = glm::scale(wall2, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall2);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall8 = modelTemp;
-		wall8 = glm::translate(wall8, glm::vec3(-6.5f, 0.0f, 25.5f));
+		wall8 = glm::translate(wall8, glm::vec3(-6.5f, -0.5f, 25.5f));
 		wall8 = glm::scale(wall8, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall8);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall9 = modelTemp;
-		wall9 = glm::translate(wall9, glm::vec3(-13.5f, 0.0f, 25.5f));
+		wall9 = glm::translate(wall9, glm::vec3(-13.5f, -0.5f, 25.5f));
 		wall9 = glm::scale(wall9, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall9);
 		wallModel.Draw(modelShader);
 
 		// Paredes Izquierdas
 		glm::mat4 wall3 = modelTemp;
-		wall3 = glm::translate(wall3, glm::vec3(22.5f, 0.0f, 22.0f));
+		wall3 = glm::translate(wall3, glm::vec3(22.5f, -0.5f, 22.0f));
 		wall3 = glm::rotate(wall3, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall3 = glm::scale(wall3, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall3);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall4 = modelTemp;
-		wall4 = glm::translate(wall4, glm::vec3(22.5f, 0.0f, 15.0f));
+		wall4 = glm::translate(wall4, glm::vec3(22.5f, -0.5f, 15.0f));
 		wall4 = glm::rotate(wall4, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall4 = glm::scale(wall4, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall4);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall5 = modelTemp;
-		wall5 = glm::translate(wall5, glm::vec3(22.5f, 0.0f, 8.0f));
+		wall5 = glm::translate(wall5, glm::vec3(22.5f, -0.5f, 8.0f));
 		wall5 = glm::rotate(wall5, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall5 = glm::scale(wall5, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall5);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall6 = modelTemp;
-		wall6 = glm::translate(wall6, glm::vec3(22.5f, 0.0f, 1.0f));
+		wall6 = glm::translate(wall6, glm::vec3(22.5f, -0.5f, 1.0f));
 		wall6 = glm::rotate(wall6, glm::radians(90.5f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall6 = glm::scale(wall6, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall6);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall7 = modelTemp;
-		wall7 = glm::translate(wall7, glm::vec3(22.5f, 0.0f, -6.0f));
+		wall7 = glm::translate(wall7, glm::vec3(22.5f, -0.5f, -6.0f));
 		wall7 = glm::rotate(wall7, glm::radians(90.5f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall7 = glm::scale(wall7, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall7);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall15 = modelTemp;
-		wall15 = glm::translate(wall15, glm::vec3(22.5f, 0.0f, -13.0f));
+		wall15 = glm::translate(wall15, glm::vec3(22.5f, -0.5f, -13.0f));
 		wall15 = glm::rotate(wall15, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall15 = glm::scale(wall15, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall15);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall16 = modelTemp;
-		wall16 = glm::translate(wall16, glm::vec3(22.5f, 0.0f, -20.0f));
+		wall16 = glm::translate(wall16, glm::vec3(22.5f, -0.5f, -20.0f));
 		wall16 = glm::rotate(wall16, glm::radians(90.5f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall16 = glm::scale(wall16, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall16);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall17 = modelTemp;
-		wall17 = glm::translate(wall17, glm::vec3(22.5f, 0.0f, -27.0f));
+		wall17 = glm::translate(wall17, glm::vec3(22.5f, -0.5f, -27.0f));
 		wall17 = glm::rotate(wall17, glm::radians(90.5f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall17 = glm::scale(wall17, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall17);
@@ -1737,56 +1763,56 @@ int main()
 
 		// Paredes Derechas
 		glm::mat4 wall10 = modelTemp;
-		wall10 = glm::translate(wall10, glm::vec3(-17.0f, 0.0f, 22.0f));
+		wall10 = glm::translate(wall10, glm::vec3(-17.0f, -0.5f, 22.0f));
 		wall10 = glm::rotate(wall10, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall10 = glm::scale(wall10, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall10);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall11 = modelTemp;
-		wall11 = glm::translate(wall11, glm::vec3(-17.0f, 0.0f, 15.0f));
+		wall11 = glm::translate(wall11, glm::vec3(-17.0f, -0.5f, 15.0f));
 		wall11 = glm::rotate(wall11, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall11 = glm::scale(wall11, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall11);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall12 = modelTemp;
-		wall12 = glm::translate(wall12, glm::vec3(-17.0f, 0.0f, 8.0f));
+		wall12 = glm::translate(wall12, glm::vec3(-17.0f, -0.5f, 8.0f));
 		wall12 = glm::rotate(wall12, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall12 = glm::scale(wall12, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall12);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall13 = modelTemp;
-		wall13 = glm::translate(wall13, glm::vec3(-17.0f, 0.0f, 1.0f));
+		wall13 = glm::translate(wall13, glm::vec3(-17.0f, -0.5f, 1.0f));
 		wall13 = glm::rotate(wall13, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall13 = glm::scale(wall13, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall13);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall14 = modelTemp;
-		wall14 = glm::translate(wall14, glm::vec3(-17.0f, 0.0f, -6.0f));
+		wall14 = glm::translate(wall14, glm::vec3(-17.0f, -0.5f, -6.0f));
 		wall14 = glm::rotate(wall14, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall14 = glm::scale(wall14, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall14);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall18 = modelTemp;
-		wall18 = glm::translate(wall18, glm::vec3(-17.0f, 0.0f, -13.0f));
+		wall18 = glm::translate(wall18, glm::vec3(-17.0f, -0.5f, -13.0f));
 		wall18 = glm::rotate(wall18, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall18 = glm::scale(wall18, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall18);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall19 = modelTemp;
-		wall19 = glm::translate(wall19, glm::vec3(-17.0f, 0.0f, -20.0f));
+		wall19 = glm::translate(wall19, glm::vec3(-17.0f, -0.5f, -20.0f));
 		wall19 = glm::rotate(wall19, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall19 = glm::scale(wall19, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall19);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall20 = modelTemp;
-		wall20 = glm::translate(wall20, glm::vec3(-17.0f, 0.0f, -27.0f));
+		wall20 = glm::translate(wall20, glm::vec3(-17.0f, -0.5f, -27.0f));
 		wall20 = glm::rotate(wall20, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		wall20 = glm::scale(wall20, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall20);
@@ -1794,44 +1820,273 @@ int main()
 
 		//Paredes del Fondo
 		glm::mat4 wall21 = modelTemp;
-		wall21 = glm::translate(wall21, glm::vec3(12.0f, 0.0f, -30.5f));
+		wall21 = glm::translate(wall21, glm::vec3(12.0f, -0.5f, -30.5f));
 		wall21 = glm::scale(wall21, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall21);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall22 = modelTemp;
-		wall22 = glm::translate(wall22, glm::vec3(19.0f, 0.0f, -30.5f));
+		wall22 = glm::translate(wall22, glm::vec3(19.0f, -0.5f, -30.5f));
 		wall22 = glm::scale(wall22, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall22);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall23 = modelTemp;
-		wall23 = glm::translate(wall23, glm::vec3(-6.5f, 0.0f, -30.5f));
+		wall23 = glm::translate(wall23, glm::vec3(-6.5f, -0.5f, -30.5f));
 		wall23 = glm::scale(wall23, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall23);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall24 = modelTemp;
-		wall24 = glm::translate(wall24, glm::vec3(-13.5f, 0.0f, -30.5f));
+		wall24 = glm::translate(wall24, glm::vec3(-13.5f, -0.5f, -30.5f));
 		wall24 = glm::scale(wall24, glm::vec3(2.5f));
 		modelShader.setMat4("model", wall24);
 		wallModel.Draw(modelShader);
 
 		glm::mat4 wall25 = modelTemp;
-		wall25 = glm::translate(wall25, glm::vec3(3.5f, 0.0f, -30.5f));
-	 wall25 = glm::scale(wall25, glm::vec3(4.0f, 2.5f, 2.5f));
+		wall25 = glm::translate(wall25, glm::vec3(3.5f, -0.5f, -30.5f));
+		wall25 = glm::scale(wall25, glm::vec3(4.0f, 2.5f, 2.5f));
 		modelShader.setMat4("model", wall25);
 		wallModel.Draw(modelShader);
+
+		//Pilares acuario
+		glm::mat4 pillar1 = modelTemp;
+		pillar1 = glm::translate(pillar1, glm::vec3(-16.0f, 0.0f, -18.5f));
+		pillar1 = glm::scale(pillar1, glm::vec3(0.7f));
+		modelShader.setMat4("model", pillar1);
+		pilar.Draw(modelShader);
+
+		glm::mat4 pillar2 = modelTemp;
+		pillar2 = glm::translate(pillar2, glm::vec3(0.0f, 0.0f, -18.5f));
+		pillar2 = glm::scale(pillar2, glm::vec3(0.7f));
+		modelShader.setMat4("model", pillar2);
+		pilar.Draw(modelShader);
+
+		glm::mat4 pillar3 = modelTemp;
+		pillar3 = glm::translate(pillar3, glm::vec3(-16.0f, 0.0f, -27.5f));
+		pillar3 = glm::scale(pillar3, glm::vec3(0.7f));
+		modelShader.setMat4("model", pillar3);
+		pilar.Draw(modelShader);
+
+		glm::mat4 pillar4 = modelTemp;
+		pillar4 = glm::translate(pillar4, glm::vec3(0.0f, 0.0f, -27.5f));
+		pillar4 = glm::scale(pillar4, glm::vec3(0.7f));
+		modelShader.setMat4("model", pillar4);
+		pilar.Draw(modelShader);
+
+		// === CARGA DE MODELOS Y ANIMACIÓN DE PECES EN CUADRADO ===
+		// === MOVIMIENTO RECTANGULAR DE PECES ===
+		if (fishDir == 0) { // Derecha
+			posFishesX += fishSpeed;
+			if (posFishesX >= xMax) {
+				fishDir = 1;
+				rotFish = 0.0f;
+			}
+		}
+		else if (fishDir == 1) { // Arriba
+			posFishesZ -= fishSpeed;
+			if (posFishesZ <= zMin) {
+				fishDir = 2;
+				rotFish = -90.0f; // izquierda
+			}
+		}
+		else if (fishDir == 2) { // Izquierda
+			posFishesX -= fishSpeed;
+			if (posFishesX <= xMin) {
+				fishDir = 3;
+				rotFish = 180.0f; // abajo
+			}
+		}
+		else if (fishDir == 3) { // Abajo
+			posFishesZ += fishSpeed;
+			if (posFishesZ >= zMax) {
+				fishDir = 0;
+				rotFish = 90.0f; // derecha (reinicia)
+			}
+		}
+
+
+		glm::mat4 clown = modelTemp; 
+		clown = glm::translate(clown, glm::vec3(posFishesX, 0.0f, posFishesZ)); 
+		clown = glm::rotate(clown, glm::radians(rotFish), glm::vec3(0.0f, 1.0f, 0.0f)); 
+		clown = glm::scale(clown, glm::vec3(10.0f)); 
+		modelShader.setMat4("model", clown); 
+		clownFish.Draw(modelShader); 
+		
+		glm::mat4 pez = modelTemp; 
+		pez = glm::translate(pez, glm::vec3(posFishesX - 1.0f, 0.0f, posFishesZ + 0.5)); 
+		pez = glm::rotate(pez, glm::radians(rotFish), glm::vec3(0.0f, 1.0f, 0.0f)); 
+		pez = glm::scale(pez, glm::vec3(10.0f)); modelShader.setMat4("model", pez); 
+		fishG.Draw(modelShader); 
+		
+		glm::mat4 goldf = modelTemp; 
+		goldf = glm::translate(goldf, glm::vec3(posFishesX - 1.0f, 0.0f, posFishesZ - 0.5)); 
+		goldf = glm::rotate(goldf, glm::radians(rotFish), glm::vec3(0.0f, 1.0f, 0.0f)); 
+		goldf = glm::scale(goldf, glm::vec3(10.0f)); 
+		modelShader.setMat4("model", goldf); 
+		goldFish.Draw(modelShader);
+
+		// === NARVAL ===
+		{
+			glm::mat4 narval = modelTemp;
+
+			float timeValue = glfwGetTime();
+			float floatY = sin(timeValue * 0.8f) * 0.2f;   // movimiento suave en Y
+			float tilt = sin(timeValue * 0.4f) * glm::radians(5.0f); // ligera inclinación
+
+			narval = glm::translate(narval, glm::vec3(-9.0f, 0.65f + floatY, -23.5f)); 
+			narval = glm::rotate(narval, tilt, glm::vec3(1.0f, 0.0f, 0.0f)); 
+			narval = glm::scale(narval, glm::vec3(0.8f)); 
+			modelShader.setMat4("model", narval);
+			narwal.Draw(modelShader);
+		}
+
+		// === TORTUGA Y CANGREJO ===
+		{
+			glm::mat4 turtleBig = modelTemp;
+
+			float timeValue = glfwGetTime();
+			float totalDistance = 8.0f; 
+			float movX = fmod(timeValue * 0.02f, totalDistance);
+			float floatY = sin(timeValue * 0.5f) * 0.05f;
+
+			turtleBig = glm::translate(turtleBig, glm::vec3(-12.0f + movX, -0.3f + floatY, -23.0f));
+			turtleBig = glm::rotate(turtleBig, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			turtleBig = glm::scale(turtleBig, glm::vec3(3.0f));
+			modelShader.setMat4("model", turtleBig);
+			seaTurtle.Draw(modelShader);
+
+			glm::mat4 turtle = modelTemp;
+			turtle = glm::translate(turtle, glm::vec3(-14.0f + movX, -0.3f + floatY, -25.0f));
+			turtle = glm::rotate(turtle, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			turtle = glm::scale(turtle, glm::vec3(0.8f));
+			modelShader.setMat4("model", turtle);
+			seaTurtle.Draw(modelShader);
+
+			glm::mat4 crab = modelTemp;
+			crab = glm::translate(crab, glm::vec3(-14.0f + movX, -0.3f + floatY, -24.0f));
+			crab = glm::rotate(crab, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			crab = glm::scale(crab, glm::vec3(1.2f));
+			modelShader.setMat4("model", crab);
+			seaCrab.Draw(modelShader);
+		}
+
+		// === Corales ===
+		glm::mat4 coral = modelTemp;
+		coral = glm::translate(coral, glm::vec3(-8.0f, -0.3f, -26.0f));
+		coral = glm::scale(coral, glm::vec3(0.05f));
+		modelShader.setMat4("model", coral);
+		corals.Draw(modelShader);
+		
+		//=== Habitat Aviario ===
+		glm::mat4 rejaA = modelTemp;
+		rejaA = glm::translate(rejaA, glm::vec3(12.0f, -0.8f, -28.0f));
+		rejaA = glm::scale(rejaA, glm::vec3(7.0f, 6.0f, 5.0f));
+		modelShader.setMat4("model", rejaA);
+		reja.Draw(modelShader);
+
+		glm::mat4 rejaB = modelTemp;
+		rejaB = glm::translate(rejaB, glm::vec3(3.0f, -0.8f, -21.5f));
+		rejaB = glm::rotate(rejaB, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		rejaB = glm::scale(rejaB, glm::vec3(5.0f, 6.0f, 5.0f));
+		modelShader.setMat4("model", rejaB);
+		reja.Draw(modelShader);
+
+		glm::mat4 rejaA1 = modelTemp;
+		rejaA1 = glm::translate(rejaA1, glm::vec3(12.0f, -0.8f, -15.0f));
+		rejaA1 = glm::scale(rejaA1, glm::vec3(7.0f, 6.0f, 5.0f));
+		modelShader.setMat4("model", rejaA1);
+		reja.Draw(modelShader);
+
+		glm::mat4 rejaB1 = modelTemp;
+		rejaB1 = glm::translate(rejaB1, glm::vec3(20.5f, -0.8f, -21.5f));
+		rejaB1 = glm::rotate(rejaB1, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		rejaB1 = glm::scale(rejaB1, glm::vec3(5.0f, 6.0f, 5.0f));
+		modelShader.setMat4("model", rejaB1);
+		reja.Draw(modelShader);
+
+		//Arbolitos del acuario
+		glm::mat4 tree1 = modelTemp;
+		tree1 = glm::translate(tree1, glm::vec3(-2.0f, -1.0f, -28.5f));
+		tree1 = glm::scale(tree1, glm::vec3(0.3f, 0.3f, 0.2f));
+		modelShader.setMat4("model", tree1);
+		TreeA.Draw(modelShader);
+
+		glm::mat4 tree4 = modelTemp;
+		tree4 = glm::translate(tree4, glm::vec3(-5.0f, -1.0f, -28.5f));
+		tree4 = glm::scale(tree4, glm::vec3(0.3f, 0.3f, 0.2f));
+		modelShader.setMat4("model", tree4);
+		TreeA.Draw(modelShader);
+
+		glm::mat4 tree5 = modelTemp;
+		tree5 = glm::translate(tree5, glm::vec3(1.0f, -1.0f, -28.5f));
+		tree5 = glm::scale(tree5, glm::vec3(0.3f, 0.3f, 0.2f));
+		modelShader.setMat4("model", tree5);
+		TreeA.Draw(modelShader);
+
+		glm::mat4 tree6 = modelTemp;
+		tree6 = glm::translate(tree6, glm::vec3(-8.0f, -1.0f, -28.5f));
+		tree6 = glm::scale(tree6, glm::vec3(0.3f, 0.3f, 0.2f));
+		modelShader.setMat4("model", tree6);
+		TreeA.Draw(modelShader);
+
+		glm::mat4 tree7 = modelTemp;
+		tree7 = glm::translate(tree7, glm::vec3(-11.0f, -1.0f, -28.5f));
+		tree7 = glm::scale(tree7, glm::vec3(0.3f, 0.3f, 0.2f));
+		modelShader.setMat4("model", tree7);
+		TreeA.Draw(modelShader);
+
+		glm::mat4 tree8 = modelTemp;
+		tree8 = glm::translate(tree8, glm::vec3(-14.0f, -1.0f, -28.5f));
+		tree8 = glm::scale(tree8, glm::vec3(0.3f, 0.3f, 0.2f));
+		modelShader.setMat4("model", tree8);
+		TreeA.Draw(modelShader);
+
+		glm::mat4 tree9 = modelTemp;
+		tree9 = glm::translate(tree9, glm::vec3(1.5f, -1.0f, -25.5f));
+		tree9 = glm::rotate(tree9, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		tree9 = glm::scale(tree9, glm::vec3(0.3f, 0.3f, 0.2f));
+		modelShader.setMat4("model", tree9);
+		TreeA.Draw(modelShader);
+
+		glm::mat4 tree10 = modelTemp;
+		tree10 = glm::translate(tree10, glm::vec3(1.5f, -1.0f, -22.5f));
+		tree10 = glm::rotate(tree10, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		tree10 = glm::scale(tree10, glm::vec3(0.3f, 0.3f, 0.2f));
+		modelShader.setMat4("model", tree10);
+		TreeA.Draw(modelShader);
+
+		glm::mat4 tree11 = modelTemp;
+		tree11 = glm::translate(tree11, glm::vec3(1.5f, -1.0f, -19.5f));
+		tree11 = glm::rotate(tree11, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		tree11 = glm::scale(tree11, glm::vec3(0.3f, 0.3f, 0.2f));
+		modelShader.setMat4("model", tree11);
+		TreeA.Draw(modelShader);
+
+		//=== Modelos aviario ===
+		glm::mat4 tree2 = modelTemp;
+		tree2 = glm::translate(tree2, glm::vec3(18.0f, -1.0f, -25.0f));
+		tree2 = glm::rotate(tree2, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		tree2 = glm::scale(tree2, glm::vec3(0.03f));
+		modelShader.setMat4("model", tree2);
+		Tree.Draw(modelShader);
+
+		glm::mat4 tree3 = modelTemp;
+		tree3 = glm::translate(tree3, glm::vec3(6.0f, -1.0f, -26.0f));
+		tree3 = glm::rotate(tree3, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		tree3 = glm::scale(tree3, glm::vec3(0.02f));
+		modelShader.setMat4("model", tree3);
+		Tree.Draw(modelShader);
 
 		// === Dibujar acuario con textura de agua ===
 		lightingShader.Use();
 		lightingShader.setMat4("view", view);
 		lightingShader.setMat4("projection", projection);
 
-		// Posición y tamaño del cubo
+		// Posición y tamaño del acuario
 		glm::mat4 glassModel = glm::mat4(1.0f);
-		glassModel = glm::translate(glassModel, glm::vec3(0.0f, 0.0f, -25.0f));
-		glassModel = glm::scale(glassModel, glm::vec3(5.0f, 3.0f, 5.0f));
+		glassModel = glm::translate(glassModel, glm::vec3(-8.0f, 0.0f, -23.0f));
+		glassModel = glm::scale(glassModel, glm::vec3(8.0f, 3.0f, 4.5f));
 		lightingShader.setMat4("model", glassModel);
 
 		// Configurar materiales (color base + brillo)

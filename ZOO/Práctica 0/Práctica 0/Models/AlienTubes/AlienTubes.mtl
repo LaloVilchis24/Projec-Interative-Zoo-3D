@@ -1,0 +1,11 @@
+# Created with Anim8or 1.00
+# Object "Alien Tube 1-4-set":
+
+newmtl AlienTubes
+Ka 0.133 0.133 0.133
+Kd 0.38 0.38 0.38
+Ks 0.149 0.149 0.149
+Ns 738.6
+map_Kd AlienTubes_Base_Diffuse.png
+map_Ks AlienTubes_Base_Specular.png
+
