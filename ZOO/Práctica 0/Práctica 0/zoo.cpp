@@ -159,6 +159,96 @@ void resetElementsRhino(void)
 	rhinoBLegs = KeyFrameRhino[0].rhinoBLegs;
 }
 
+// Función para cargar animación predefinida del rinoceronte
+void loadPredefinedAnimationRhino(void)
+{
+	// KeyFrame 0 - Posición inicial
+	KeyFrameRhino[0].rhinoPosX = 0.0f;
+	KeyFrameRhino[0].rhinoPosY = -0.5f;
+	KeyFrameRhino[0].rhinoPosZ = -5.0f;
+	KeyFrameRhino[0].rotRhino = 0.0f;
+	KeyFrameRhino[0].rhinoHead = 0.0f;
+	KeyFrameRhino[0].rhinoFLegs = 0.0f;
+	KeyFrameRhino[0].rhinoBLegs = 0.0f;
+
+	// KeyFrame 1 - Caminar hacia adelante (lado 1 del cuadrado)
+	KeyFrameRhino[1].rhinoPosX = 0.0f;
+	KeyFrameRhino[1].rhinoPosY = -0.5f;
+	KeyFrameRhino[1].rhinoPosZ = 0.0f;
+	KeyFrameRhino[1].rotRhino = 0.0f;
+	KeyFrameRhino[1].rhinoHead = 2.0f;
+	KeyFrameRhino[1].rhinoFLegs = 5.0f;
+	KeyFrameRhino[1].rhinoBLegs = -5.0f;
+
+	// KeyFrame 2 - Girar 90 grados a la derecha
+	KeyFrameRhino[2].rhinoPosX = 0.0f;
+	KeyFrameRhino[2].rhinoPosY = -0.5f;
+	KeyFrameRhino[2].rhinoPosZ = 0.0f;
+	KeyFrameRhino[2].rotRhino = 90.0f;
+	KeyFrameRhino[2].rhinoHead = -2.0f;
+	KeyFrameRhino[2].rhinoFLegs = 0.0f;
+	KeyFrameRhino[2].rhinoBLegs = 0.0f;
+
+	// KeyFrame 3 - Caminar hacia la derecha (lado 2 del cuadrado)
+	KeyFrameRhino[3].rhinoPosX = 5.0f;
+	KeyFrameRhino[3].rhinoPosY = -0.5f;
+	KeyFrameRhino[3].rhinoPosZ = 0.0f;
+	KeyFrameRhino[3].rotRhino = 90.0f;
+	KeyFrameRhino[3].rhinoHead = 2.0f;
+	KeyFrameRhino[3].rhinoFLegs = 5.0f;
+	KeyFrameRhino[3].rhinoBLegs = -5.0f;
+
+	// KeyFrame 4 - Girar 180 grados (hacia abajo)
+	KeyFrameRhino[4].rhinoPosX = 5.0f;
+	KeyFrameRhino[4].rhinoPosY = -0.5f;
+	KeyFrameRhino[4].rhinoPosZ = 0.0f;
+	KeyFrameRhino[4].rotRhino = 180.0f;
+	KeyFrameRhino[4].rhinoHead = -50.0f;
+	KeyFrameRhino[4].rhinoFLegs = 0.0f;
+	KeyFrameRhino[4].rhinoBLegs = 0.0f;
+
+	// KeyFrame 5 - Caminar hacia abajo (lado 3 del cuadrado)
+	KeyFrameRhino[5].rhinoPosX = 5.0f;
+	KeyFrameRhino[5].rhinoPosY = -0.5f;
+	KeyFrameRhino[5].rhinoPosZ = -5.0f;
+	KeyFrameRhino[5].rotRhino = 180.0f;
+	KeyFrameRhino[5].rhinoHead = 2.0f;
+	KeyFrameRhino[5].rhinoFLegs = 5.0f;
+	KeyFrameRhino[5].rhinoBLegs = -5.0f;
+
+	// KeyFrame 6 - Girar 270 grados (hacia la izquierda)
+	KeyFrameRhino[6].rhinoPosX = 5.0f;
+	KeyFrameRhino[6].rhinoPosY = -0.5f;
+	KeyFrameRhino[6].rhinoPosZ = -5.0f;
+	KeyFrameRhino[6].rotRhino = 270.0f;
+	KeyFrameRhino[6].rhinoHead = -3.0f;
+	KeyFrameRhino[6].rhinoFLegs = 0.0f;
+	KeyFrameRhino[6].rhinoBLegs = 0.0f;
+
+	// KeyFrame 7 - Caminar hacia la izquierda (lado 4 del cuadrado)
+	KeyFrameRhino[7].rhinoPosX = 0.0f;
+	KeyFrameRhino[7].rhinoPosY = -0.5f;
+	KeyFrameRhino[7].rhinoPosZ = -5.0f;
+	KeyFrameRhino[7].rotRhino = 270.0f;
+	KeyFrameRhino[7].rhinoHead = 2.0f;
+	KeyFrameRhino[7].rhinoFLegs = 5.0f;
+	KeyFrameRhino[7].rhinoBLegs = -5.0f;
+
+	// KeyFrame 8 - Girar a 0 grados para cerrar el ciclo
+	KeyFrameRhino[8].rhinoPosX = 0.0f;
+	KeyFrameRhino[8].rhinoPosY = -0.5f;
+	KeyFrameRhino[8].rhinoPosZ = -5.0f;
+	KeyFrameRhino[8].rotRhino = 360.0f;
+	KeyFrameRhino[8].rhinoHead = 0.0f;
+	KeyFrameRhino[8].rhinoFLegs = 0.0f;
+	KeyFrameRhino[8].rhinoBLegs = 0.0f;
+
+	// Establecer el índice de frames al máximo
+	FrameIndexRhino = MAX_FRAMES_RHINO;
+	
+	printf("Animacion predefinida del rinoceronte cargada: %d keyframes\n", FrameIndexRhino);
+}
+
 void interpolationRhino(void)
 {
 	KeyFrameRhino[playIndexRhino].incX = (KeyFrameRhino[playIndexRhino + 1].rhinoPosX - KeyFrameRhino[playIndexRhino].rhinoPosX) / i_max_steps_rhino;
@@ -169,7 +259,7 @@ void interpolationRhino(void)
 	KeyFrameRhino[playIndexRhino].rhinoFLegsInc = (KeyFrameRhino[playIndexRhino + 1].rhinoFLegs - KeyFrameRhino[playIndexRhino].rhinoFLegs) / i_max_steps_rhino;
 	KeyFrameRhino[playIndexRhino].rhinoBLegsInc = (KeyFrameRhino[playIndexRhino + 1].rhinoBLegs - KeyFrameRhino[playIndexRhino].rhinoBLegs) / i_max_steps_rhino;
 }
-
+ //procedural
 void AnimationRhino()
 {
 	if (playRhino)
@@ -179,9 +269,13 @@ void AnimationRhino()
 			playIndexRhino++;
 			if (playIndexRhino > FrameIndexRhino - 2)
 			{
-				printf("Animacion terminada\n");
+				// En lugar de detener la animación, reiniciarla para hacer loop
+				printf("Ciclo de animacion completado. Reiniciando...\n");
 				playIndexRhino = 0;
-				playRhino = false;
+				resetElementsRhino();
+				i_curr_steps_rhino = 0;
+				interpolationRhino();
+				// playRhino permanece en true para continuar el loop
 			}
 			else
 			{
@@ -191,17 +285,77 @@ void AnimationRhino()
 		}
 		else
 		{
+		
 			rhinoPosX += KeyFrameRhino[playIndexRhino].incX;
 			rhinoPosY += KeyFrameRhino[playIndexRhino].incY;
 			rhinoPosZ += KeyFrameRhino[playIndexRhino].incZ;
 			rotRhino += KeyFrameRhino[playIndexRhino].rotRhinoInc;
 			rhinoHead += KeyFrameRhino[playIndexRhino].rhinoHeadInc;
-			rhinoFLegs += KeyFrameRhino[playIndexRhino].rhinoFLegsInc;
-			rhinoBLegs += KeyFrameRhino[playIndexRhino].rhinoBLegsInc;
+
+			
+			bool isMoving = (KeyFrameRhino[playIndexRhino].incX != 0.0f) ||
+				(KeyFrameRhino[playIndexRhino].incZ != 0.0f);
+
+			if (isMoving)
+			{
+				
+
+				float time = (float)glfwGetTime(); 
+
+		
+				float legFrequency = 15.0f; 
+				float legAmplitude = 45.0f; 
+
+				rhinoFLegs = glm::sin(time * legFrequency) * legAmplitude;
+				rhinoBLegs = -glm::sin(time * legFrequency) * legAmplitude; 
+			}
+			else
+			{
+				
+				rhinoFLegs += KeyFrameRhino[playIndexRhino].rhinoFLegsInc;
+				rhinoBLegs += KeyFrameRhino[playIndexRhino].rhinoBLegsInc;
+			}
 			i_curr_steps_rhino++;
 		}
 	}
 }
+////keyframes
+//void AnimationRhino()
+//{
+//	if (playRhino)
+//	{
+//		if (i_curr_steps_rhino >= i_max_steps_rhino)
+//		{
+//			playIndexRhino++;
+//			if (playIndexRhino > FrameIndexRhino - 2)
+//			{
+//				// En lugar de detener la animación, reiniciarla para hacer loop
+//				printf("Ciclo de animacion completado. Reiniciando...\n");
+//				playIndexRhino = 0;
+//				resetElementsRhino();
+//				i_curr_steps_rhino = 0;
+//				interpolationRhino();
+//				// playRhino permanece en true para continuar el loop
+//			}
+//			else
+//			{
+//				i_curr_steps_rhino = 0;
+//				interpolationRhino();
+//			}
+//		}
+//		else
+//		{
+//			rhinoPosX += KeyFrameRhino[playIndexRhino].incX;
+//			rhinoPosY += KeyFrameRhino[playIndexRhino].incY;
+//			rhinoPosZ += KeyFrameRhino[playIndexRhino].incZ;
+//			rotRhino += KeyFrameRhino[playIndexRhino].rotRhinoInc;
+//			rhinoHead += KeyFrameRhino[playIndexRhino].rhinoHeadInc;
+//			rhinoFLegs += KeyFrameRhino[playIndexRhino].rhinoFLegsInc;
+//			rhinoBLegs += KeyFrameRhino[playIndexRhino].rhinoBLegsInc;
+//			i_curr_steps_rhino++;
+//		}
+//	}
+//}
 
 #define MAX_FRAMES_ZEBRA 9
 int i_max_steps_zebra = 190;
@@ -666,7 +820,7 @@ void AnimationBear()
 				playIndexBear = 0;
 				playBear = false;
 			}
-			else
+		 else
 			{
 				i_curr_steps_bear = 0;
 				interpolationBear();
@@ -811,7 +965,11 @@ int main()
 	Model wallModel((char*)"Models/Pared/fence.obj");
 	Model entranceModel((char*)"Models/Entrada/Gate_obj.obj");
 
-	// Inicializar KeyFrames del rinoceronte
+	// ===== CARGAR ANIMACIÓN PREDEFINIDA DEL RINOCERONTE =====
+	loadPredefinedAnimationRhino();
+	
+	// Inicializar KeyFrames del rinoceronte (comentado porque usamos animación predefinida)
+	/*
 	for (int i = 0; i < MAX_FRAMES_RHINO; i++)
 	{
 		KeyFrameRhino[i].rhinoPosX = 0;
@@ -829,6 +987,7 @@ int main()
 		KeyFrameRhino[i].rhinoBLegs = 0;
 		KeyFrameRhino[i].rhinoBLegsInc = 0;
 	}
+	*/
 
 	// Inicializar KeyFrames de la zebra
 	for (int i = 0; i < MAX_FRAMES_ZEBRA; i++)
@@ -1202,30 +1361,35 @@ int main()
 
 		//Cabeza Rhino
 		model = modelTemp;
+		model = glm::translate(model, glm::vec3(0.002639f, 1.22896f, 0.903224f));
 		model = glm::rotate(model, glm::radians(rhinoHead), glm::vec3(0.0f, 1.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		HeadRhino.Draw(modelShader);
 
 		// PATA DELANTERA IZQUIERDA Rhino
 		model = modelTemp;
+		model = glm::translate(model, glm::vec3(-0.357265f, 0.681231f, 0.669307f));
 		model = glm::rotate(model, glm::radians(rhinoFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		F_LeftLegRhino.Draw(modelShader);
 
 		// PATA DELANTERA DERECHA Rhino
 		model = modelTemp;
+		model = glm::translate(model, glm::vec3(0.36863f, 0.72705f, 0.664725f));
 		model = glm::rotate(model, glm::radians(-rhinoFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		F_RightLegRhino.Draw(modelShader);
 
 		// PATA TRASERA IZQUIERDA Rhino
 		model = modelTemp;
+		model = glm::translate(model, glm::vec3(-0.327688f, 0.809153f, -1.11341f));
 		model = glm::rotate(model, glm::radians(-rhinoBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		B_LeftLegRhino.Draw(modelShader);
 
 		// PATA TRASERA DERECHA Rhino
 		model = modelTemp;
+		model = glm::translate(model, glm::vec3(0.318784f, 0.75417f, -1.11341f));
 		model = glm::rotate(model, glm::radians(rhinoBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		B_RightLegRhino.Draw(modelShader);
@@ -1242,37 +1406,43 @@ int main()
 
 		//Cabeza Lion
 		model = modelTempLion;
+		model = glm::translate(model, glm::vec3(0.422815f, 0.240452f, -0.002748f));
 		model = glm::rotate(model, glm::radians(lionHead), glm::vec3(0.0f, 1.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		HeadLion.Draw(modelShader);
 
 		// PATA DELANTERA IZQUIERDA Lion
 		model = modelTempLion;
-		model = glm::rotate(model, glm::radians(lionFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.206645f, -0.110351f, 0.108954f));
+		model = glm::rotate(model, glm::radians(lionFLegs), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelShader.setMat4("model", model);
 		F_LeftLegLion.Draw(modelShader);
 
 		// PATA DELANTERA DERECHA Lion
 		model = modelTempLion;
-		model = glm::rotate(model, glm::radians(-lionFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.244861f, -0.097645f, -0.109556f));
+		model = glm::rotate(model, glm::radians(-lionFLegs), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelShader.setMat4("model", model);
 		F_RightLegLion.Draw(modelShader);
 
 		// PATA TRASERA IZQUIERDA Lion
 		model = modelTempLion;
-		model = glm::rotate(model, glm::radians(-lionBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-0.281848f, -0.00993f, 0.08262f));
+		model = glm::rotate(model, glm::radians(-lionBLegs), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelShader.setMat4("model", model);
 		B_LeftLegLion.Draw(modelShader);
 
 		// PATA TRASERA DERECHA Lion
 		model = modelTempLion;
-		model = glm::rotate(model, glm::radians(lionBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-0.251413f, -0.00014f, -0.093842f));
+		model = glm::rotate(model, glm::radians(lionBLegs), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelShader.setMat4("model", model);
 		B_RightLegLion.Draw(modelShader);
 
 		// COLA Lion
 		model = modelTempLion;
-		model = glm::rotate(model, glm::radians(lionTail), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-0.40091f , 0.12949f, -0.010439f));
+		model = glm::rotate(model, glm::radians(lionTail), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelShader.setMat4("model", model);
 		TailLion.Draw(modelShader);
 
@@ -1281,43 +1451,51 @@ int main()
 		modelTempZebra = glm::translate(modelTempZebra, glm::vec3(zebraPosX, zebraPosY, zebraPosZ));
 		modelTempZebra = glm::rotate(modelTempZebra, glm::radians(rotZebra), glm::vec3(0.0f, 1.0f, 0.0f));
 
-		//Cuerpo Zebra
+		//Cuerpo Cebra
 		model = modelTempZebra;
 		modelShader.setMat4("model", model);
 		BodyZebra.Draw(modelShader);
 
-		//Cabeza Zebra
+		//Cabeza Cebra
 		model = modelTempZebra;
-		model = glm::rotate(model, glm::radians(zebraHead), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.002846f, 1.2333f, 0.48328f));
+		model = glm::rotate(model, glm::radians(zebraHead), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		HeadZebra.Draw(modelShader);
 
+
 		// PATA DELANTERA IZQUIERDA Zebra
 		model = modelTempZebra;
+		
+		model = glm::translate(model, glm::vec3(-0.18725f, 0.793251f, 0.321389f));
 		model = glm::rotate(model, glm::radians(zebraFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		F_LeftLegZebra.Draw(modelShader);
 
 		// PATA DELANTERA DERECHA Zebra
 		model = modelTempZebra;
+		model = glm::translate(model, glm::vec3(0.187179f, 0.775141f, 0.309626f));
 		model = glm::rotate(model, glm::radians(-zebraFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		F_RightLegZebra.Draw(modelShader);
 
 		// PATA TRASERA IZQUIERDA Zebra
 		model = modelTempZebra;
+		model = glm::translate(model, glm::vec3(-0.156607f, 0.777266f, -0.693926f));
 		model = glm::rotate(model, glm::radians(-zebraBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		B_LeftLegZebra.Draw(modelShader);
 
 		// PATA TRASERA DERECHA Zebra
 		model = modelTempZebra;
+		model = glm::translate(model, glm::vec3(0.162712f, 0.772383f, -0.699344f));
 		model = glm::rotate(model, glm::radians(zebraBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		B_RightLegZebra.Draw(modelShader);
 
 		// COLA Zebra
 		model = modelTempZebra;
+		model = glm::translate(model, glm::vec3(-0.003215f, 0.972246f, -0.891742f));
 		model = glm::rotate(model, glm::radians(zebraTail), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		TailZebra.Draw(modelShader);
@@ -1334,30 +1512,36 @@ int main()
 
 		//Cabeza Deer
 		model = modelTempDeer;
+		//-0.446126f
+		model = glm::translate(model, glm::vec3(0.004444f, 0.934631f, 0.446126f));
 		model = glm::rotate(model, glm::radians(deerHead), glm::vec3(0.0f, 1.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		HeadDeer.Draw(modelShader);
 
 		// PATA DELANTERA IZQUIERDA Deer
 		model = modelTempDeer;
+		model = glm::translate(model, glm::vec3(-0.124788f, 0.661562f, 0.233486f));
 		model = glm::rotate(model, glm::radians(deerFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		F_LeftLegDeer.Draw(modelShader);
 
 		// PATA DELANTERA DERECHA Deer
 		model = modelTempDeer;
+		model = glm::translate(model, glm::vec3(0.118221f, 0.646354f, 0.233681f));
 		model = glm::rotate(model, glm::radians(-deerFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		F_RightLegDeer.Draw(modelShader);
 
 		// PATA TRASERA IZQUIERDA Deer
 		model = modelTempDeer;
+		model = glm::translate(model, glm::vec3(-0.116149f, 0.670526f, -0.384063f));
 		model = glm::rotate(model, glm::radians(-deerBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		B_LeftLegDeer.Draw(modelShader);
 
 		// PATA TRASERA DERECHA Deer
 		model = modelTempDeer;
+		model = glm::translate(model, glm::vec3(0.112376f, 0.654912f, -0.361251f));
 		model = glm::rotate(model, glm::radians(deerBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		B_RightLegDeer.Draw(modelShader);
@@ -1374,37 +1558,43 @@ int main()
 
 		//Cabeza Wolf
 		model = modelTempWolf;
+		model = glm::translate(model, glm::vec3(0.323833f, 0.21796f, 0.006356f));
 		model = glm::rotate(model, glm::radians(wolfHead), glm::vec3(0.0f, 1.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		HeadWolf.Draw(modelShader);
 
 		// PATA DELANTERA IZQUIERDA Wolf
 		model = modelTempWolf;
-		model = glm::rotate(model, glm::radians(wolfFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.189673f, -0.062067f, 0.122766f));
+		model = glm::rotate(model, glm::radians(wolfFLegs), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelShader.setMat4("model", model);
 		F_LeftLegWolf.Draw(modelShader);
 
 		// PATA DELANTERA DERECHA Wolf
 		model = modelTempWolf;
-		model = glm::rotate(model, glm::radians(-wolfFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.20445f, -0.065344f, -0.109262f));
+		model = glm::rotate(model, glm::radians(-wolfFLegs), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelShader.setMat4("model", model);
 		F_RightLegWolf.Draw(modelShader);
 
 		// PATA TRASERA IZQUIERDA Wolf
 		model = modelTempWolf;
-		model = glm::rotate(model, glm::radians(-wolfBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-0.30265f, -0.062009f, 0.115517f));
+		model = glm::rotate(model, glm::radians(-wolfBLegs), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelShader.setMat4("model", model);
 		B_LeftLegWolf.Draw(modelShader);
 
 		// PATA TRASERA DERECHA Wolf
 		model = modelTempWolf;
-		model = glm::rotate(model, glm::radians(wolfBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-0.312346f, -0.073358f, -0.121459f));
+		model = glm::rotate(model, glm::radians(wolfBLegs), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelShader.setMat4("model", model);
 		B_RightLegWolf.Draw(modelShader);
 
 		// COLA Wolf
 		model = modelTempWolf;
-		model = glm::rotate(model, glm::radians(wolfTail), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-0.414132f, 0.064711f, 0.005788f));
+		model = glm::rotate(model, glm::radians(wolfTail), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelShader.setMat4("model", model);
 		TailWolf.Draw(modelShader);
 
@@ -1420,30 +1610,35 @@ int main()
 
 		//Cabeza Bear
 		model = modelTempBear;
+		model = glm::translate(model, glm::vec3(-0.002199f, 0.973857f, 0.529054f));
 		model = glm::rotate(model, glm::radians(bearHead), glm::vec3(0.0f, 1.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		HeadBear.Draw(modelShader);
 
 		// PATA DELANTERA IZQUIERDA Bear
 		model = modelTempBear;
+		model = glm::translate(model, glm::vec3(-0.263069f, 0.614662f, 0.224646f));
 		model = glm::rotate(model, glm::radians(bearFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		F_LeftLegBear.Draw(modelShader);
 
 		// PATA DELANTERA DERECHA Bear
 		model = modelTempBear;
+		model = glm::translate(model, glm::vec3(0.27788f, 0.618621f, 0.241813f));
 		model = glm::rotate(model, glm::radians(-bearFLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		F_RightLegBear.Draw(modelShader);
 
 		// PATA TRASERA IZQUIERDA Bear
 		model = modelTempBear;
+		model = glm::translate(model, glm::vec3(-0.261244f, 0.621932f, -0.551798f));
 		model = glm::rotate(model, glm::radians(-bearBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		B_LeftLegBear.Draw(modelShader);
 
 		// PATA TRASERA DERECHA Bear
 		model = modelTempBear;
+		model = glm::translate(model, glm::vec3(0.250998f, 0.596885f, -0.541412f));
 		model = glm::rotate(model, glm::radians(bearBLegs), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelShader.setMat4("model", model);
 		B_RightLegBear.Draw(modelShader);
@@ -1624,7 +1819,7 @@ int main()
 
 		glm::mat4 wall25 = modelTemp;
 		wall25 = glm::translate(wall25, glm::vec3(3.5f, 0.0f, -30.5f));
-		wall25 = glm::scale(wall25, glm::vec3(4.0f, 2.5f, 2.5f));
+	 wall25 = glm::scale(wall25, glm::vec3(4.0f, 2.5f, 2.5f));
 		modelShader.setMat4("model", wall25);
 		wallModel.Draw(modelShader);
 
@@ -1715,89 +1910,89 @@ void DoMovement()
 	// Controles unificados para Rhino, Zebra, Wolf, Lion, Deer y Bear
 	if (keys[GLFW_KEY_2])
 	{
-		rotRhino += 0.1f;
-		rotZebra += 0.1f;
-		rotWolf += 0.1f;
-		rotLion += 0.1f;
-		rotDeer += 0.1f;
-		rotBear += 0.1f;
+		rotRhino += 0.5f;
+		rotZebra += 0.5f;
+		rotWolf += 0.5f;
+		rotLion += 0.5f;
+		rotDeer += 0.5f;
+		rotBear += 0.5f;
 	}
 	if (keys[GLFW_KEY_3])
 	{
-		rotRhino -= 0.1f;
-		rotZebra -= 0.1f;
-		rotWolf -= 0.1f;
-		rotLion -= 0.1f;
-		rotDeer -= 0.1f;
-		rotBear -= 0.1f;
+		rotRhino -= 0.5f;
+		rotZebra -= 0.5f;
+		rotWolf -= 0.5f;
+		rotLion -= 0.5f;
+		rotDeer -= 0.5f;
+		rotBear -= 0.5f;
 	}
 	if (keys[GLFW_KEY_4])
 	{
-		rhinoHead += 0.1f;
-		zebraHead += 0.1f;
-		wolfHead += 0.1f;
-		lionHead += 0.1f;
-		deerHead += 0.1f;
-		bearHead += 0.1f;
+		rhinoHead += 0.5f;
+		zebraHead += 0.5f;
+		wolfHead += 0.5f;
+		lionHead += 0.5f;
+		deerHead += 0.5f;
+		bearHead += 0.5f;
 	}
 	if (keys[GLFW_KEY_5])
 	{
-		rhinoHead -= 0.1f;
-		zebraHead -= 0.1f;
-		wolfHead -= 0.1f;
-		lionHead -= 0.1f;
-		deerHead -= 0.1f;
-		bearHead -= 0.1f;
+		rhinoHead -= 0.5f;
+		zebraHead -= 0.5f;
+		wolfHead -= 0.5f;
+		lionHead -= 0.5f;
+		deerHead -= 0.5f;
+		bearHead -= 0.5f;
 	}
 	if (keys[GLFW_KEY_6])
 	{
-		rhinoFLegs += 0.1f;
-		zebraFLegs += 0.1f;
-		wolfFLegs += 0.1f;
-		lionFLegs += 0.1f;
-		deerFLegs += 0.1f;
-		bearFLegs += 0.1f;
+		rhinoFLegs += 0.5f;
+		zebraFLegs += 0.5f;
+		wolfFLegs += 0.5f;
+		lionFLegs += 0.5f;
+		deerFLegs += 0.5f;
+		bearFLegs += 0.5f;
 	}
 	if (keys[GLFW_KEY_7])
 	{
-		rhinoFLegs -= 0.1f;
-		zebraFLegs -= 0.1f;
-		wolfFLegs -= 0.1f;
-		lionFLegs -= 0.1f;
-		deerFLegs -= 0.1f;
-		bearFLegs -= 0.1f;
+		rhinoFLegs -= 0.5f;
+		zebraFLegs -= 0.5f;
+		wolfFLegs -= 0.5f;
+		lionFLegs -= 0.5f;
+		deerFLegs -= 0.5f;
+		bearFLegs -= 0.5f;
 	}
 	if (keys[GLFW_KEY_8])
 	{
-		rhinoBLegs += 0.1f;
-		zebraBLegs += 0.1f;
-		wolfBLegs += 0.1f;
-		lionBLegs += 0.1f;
-		deerBLegs += 0.1f;
-		bearBLegs += 0.1f;
+		rhinoBLegs += 0.5f;
+		zebraBLegs += 0.5f;
+		wolfBLegs += 0.5f;
+		lionBLegs += 0.5f;
+		deerBLegs += 0.5f;
+		bearBLegs += 0.5f;
 	}
 	if (keys[GLFW_KEY_9])
 	{
-		rhinoBLegs -= 0.1f;
-		zebraBLegs -= 0.1f;
-		wolfBLegs -= 0.1f;
-		lionBLegs -= 0.1f;
-		deerBLegs -= 0.1f;
-		bearBLegs -= 0.1f;
+		rhinoBLegs -= 0.5f;
+		zebraBLegs -= 0.5f;
+		wolfBLegs -= 0.5f;
+		lionBLegs -= 0.5f;
+		deerBLegs -= 0.5f;
+		bearBLegs -= 0.5f;
 	}
 
 	// Control de cola (solo para Zebra, Wolf y Lion)
 	if (keys[GLFW_KEY_0])
 	{
-		zebraTail += 0.1f;
-		wolfTail += 0.1f;
-		lionTail += 0.1f;
+		zebraTail += 0.5f;
+		wolfTail += 0.5f;
+		lionTail += 0.5f;
 	}
 	if (keys[GLFW_KEY_1])
 	{
-		zebraTail -= 0.1f;
-		wolfTail -= 0.1f;
-		lionTail -= 0.1f;
+		zebraTail -= 0.5f;
+		wolfTail -= 0.5f;
+		lionTail -= 0.5f;
 	}
 
 	if (keys[GLFW_KEY_H])
@@ -1895,12 +2090,26 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 			playRhino = true;
 			playIndexRhino = 0;
 			i_curr_steps_rhino = 0;
-			std::cout << "Reproduciendo animacion..." << std::endl;
+			std::cout << "Reproduciendo animacion predefinida del rinoceronte..." << std::endl;
 		}
 		else
 		{
 			playRhino = false;
 			std::cout << "Animacion pausada" << std::endl;
+		}
+	}
+	
+	// Presiona P para iniciar animación predefinida automática (con loop)
+	if (keys[GLFW_KEY_P] && action == GLFW_PRESS)
+	{
+		if (!playRhino && FrameIndexRhino > 1)
+		{
+			resetElementsRhino();
+			interpolationRhino();
+			playRhino = true;
+			playIndexRhino = 0;
+			i_curr_steps_rhino = 0;
+			std::cout << "Iniciando animacion predefinida en loop..." << std::endl;
 		}
 	}
 }
