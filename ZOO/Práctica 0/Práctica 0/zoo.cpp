@@ -66,64 +66,69 @@ float zMin = -24.5f;
 float zMax = -20.0f;
 
 
-//ANIMACIÓN DEL RINOCERONTE
+//ANIMACIÓN DEL RINOCERONTE  (igual que KeyFrameRhino[0])
 float rotRhino = 90.0f;
 float rhinoFLegs = 0.0f;
 float rhinoBLegs = 0.0f;
 float rhinoHead = 0.0f;
-float rhinoPosX = -14.0f;   
+float rhinoPosX = -14.0f;
 float rhinoPosY = -0.5f;
-float rhinoPosZ = 21.0f;    
+float rhinoPosZ = 21.0f;
 
 
 
-//ANIMACIÓN DE LA ZEBRA
-float rotZebra = 0.0f;
+//ANIMACIÓN DE LA ZEBRA  (igual que KeyFrameZebra[0])
+float rotZebra = 90.0f;
 float zebraFLegs = 0.0f;
 float zebraBLegs = 0.0f;
 float zebraHead = 0.0f;
 float zebraTail = 0.0f;
-float zebraPosX = -6.0f;
+float zebraPosX = -9.0f;
 float zebraPosY = -0.5f;
-float zebraPosZ = 9.0f;
+float zebraPosZ = 13.0f;
 
-//ANIMACIÓN DEL WOLF
+
+//ANIMACIÓN DEL WOLF  (igual que KeyFrameWolf[0])
 float rotWolf = 0.0f;
 float wolfFLegs = 0.0f;
 float wolfBLegs = 0.0f;
 float wolfHead = 0.0f;
 float wolfTail = 0.0f;
-float wolfPosX = 8.0f;
+float wolfPosX = 10.0f;
 float wolfPosY = 0.0f;
-float wolfPosZ = 3.0f;
+float wolfPosZ = 14.0f;
 
-//ANIMACIÓN DEL LION
+
+//ANIMACIÓN DEL LION  (igual que KeyFrameLion[0])
 float rotLion = 0.0f;
 float lionFLegs = 0.0f;
 float lionBLegs = 0.0f;
 float lionHead = 0.0f;
 float lionTail = 0.0f;
-float lionPosX = -6.0f;
-float lionPosY = 0.5f;
-float lionPosZ = 2.0f;
+float lionPosX = -6.5f;
+float lionPosY = 0.3f;
+float lionPosZ = 3.0f;
 
-//ANIMACIÓN DEL DEER
-float rotDeer = 0.0f;
+
+//ANIMACIÓN DEL DEER  (igual que KeyFrameDeer[0])
+float rotDeer = 90.0f;
 float deerFLegs = 0.0f;
 float deerBLegs = 0.0f;
-float deerHead = 0.0f;
-float deerPosX = 13.0f;
+float deerHead = 3.0f;
+float deerPosX = 12.0f;
 float deerPosY = -0.5f;
-float deerPosZ = 10.0f;
+float deerPosZ = 18.0f;
 
-//ANIMACIÓN DEL BEAR
-float rotBear = 0.0f;
+
+//ANIMACIÓN DEL BEAR  (igual que KeyFrameBear[0])
+float rotBear = 90.0f;
 float bearFLegs = 0.0f;
 float bearBLegs = 0.0f;
 float bearHead = 0.0f;
-float bearPosX = 14.0f;
+float bearPosX = 11.0f;
 float bearPosY = -0.5f;
-float bearPosZ = 0.0f;
+float bearPosZ = 4.0f;
+
 
 #define MAX_FRAMES_RHINO 9
 int i_max_steps_rhino = 190;
@@ -256,7 +261,6 @@ void loadPredefinedAnimationRhino(void)
 	KeyFrameRhino[8].rhinoBLegs = 0.0f;
 
 	FrameIndexRhino = MAX_FRAMES_RHINO;
-	printf("Animacion predefinida del rinoceronte cargada (rectangulo esquina sup. izquierda sabana)\n");
 }
 
 
@@ -373,8 +377,6 @@ void resetElementsZebra(void)
 }
 void loadPredefinedAnimationZebra(void)
 {
-	// Rectángulo frente medio de la sabana, sin tocar bordes.
-
 	// 0 - Esquina superior izquierda
 	KeyFrameZebra[0].zebraPosX = -9.0f;
 	KeyFrameZebra[0].zebraPosY = -0.5f;
@@ -466,7 +468,6 @@ void loadPredefinedAnimationZebra(void)
 	KeyFrameZebra[8].zebraTail = 0.0f;
 
 	FrameIndexZebra = MAX_FRAMES_ZEBRA;
-	printf("Animacion corregida de la zebra cargada (recta y dentro de sabana)\n");
 }
 
 
@@ -542,24 +543,21 @@ void AnimationZebra()
 			else if (isTurning)
 			{
 				// --- GIRANDO ---
-
-				// Patas: Más lentas durante el giro
 				float legFrequency = 8.0f;
 				float legAmplitude = 25.0f;
 				zebraFLegs = glm::sin(time * legFrequency) * legAmplitude;
 				zebraBLegs = -glm::sin(time * legFrequency) * legAmplitude;
 
-				// Cabeza: Ligeramente hacia la dirección del giro
+				// Cabeza hacia la dirección del giro
 				float turnProgress = (float)i_curr_steps_zebra / (float)i_max_steps_zebra;
 				float headTurnAmount = KeyFrameZebra[playIndexZebra].rotZebraInc > 0 ? 12.0f : -12.0f;
 				zebraHead = headTurnAmount * glm::sin(turnProgress * 3.14159f);
 
-				// Cola: Movimiento básico
+				// Cola
 				zebraTail = glm::sin(time * 6.0f) * 18.0f;
 			}
 			else
 			{
-				// --- QUIETO (usa keyframes si los hay) ---
 				zebraFLegs += KeyFrameZebra[playIndexZebra].zebraFLegsInc;
 				zebraBLegs += KeyFrameZebra[playIndexZebra].zebraBLegsInc;
 				zebraHead += KeyFrameZebra[playIndexZebra].zebraHeadInc;
@@ -637,14 +635,11 @@ void resetElementsWolf(void)
 	wolfBLegs = KeyFrameWolf[0].wolfBLegs;
 	wolfTail = KeyFrameWolf[0].wolfTail;
 }
-// REEMPLAZA ESTA FUNCIÓN COMPLETA
+
 void loadPredefinedAnimationWolf(void)
 {
-	// Path de patrulla (ida y vuelta)
-
-	// --- IDA ---
 	// K0: Esquina sup. izquierda
-	KeyFrameWolf[0].wolfPosX = 8.0f;
+	KeyFrameWolf[0].wolfPosX = 10.0f;
 	KeyFrameWolf[0].wolfPosY = 0.0f;
 	KeyFrameWolf[0].wolfPosZ = 14.0f;
 	KeyFrameWolf[0].rotWolf = 0.0f; 
@@ -684,7 +679,7 @@ void loadPredefinedAnimationWolf(void)
 	KeyFrameWolf[3].wolfTail = 0.0f;
 
 	// --- VUELTA ---
-	// K4: Gira 180 grados en el sitio ("se voltea")
+	// K4: 
 	KeyFrameWolf[4].wolfPosX = 16.0f;
 	KeyFrameWolf[4].wolfPosY = 0.0f;
 	KeyFrameWolf[4].wolfPosZ = 4.0f;
@@ -694,7 +689,7 @@ void loadPredefinedAnimationWolf(void)
 	KeyFrameWolf[4].wolfBLegs = 0.0f;
 	KeyFrameWolf[4].wolfTail = 0.0f;
 
-	// K5: Camina de vuelta (al reves) a esquina sup. derecha
+	// K5: Camina de vuelta a esquina sup. derecha
 	KeyFrameWolf[5].wolfPosX = 16.0f;
 	KeyFrameWolf[5].wolfPosY = 0.0f;
 	KeyFrameWolf[5].wolfPosZ = 14.0f;
@@ -725,7 +720,7 @@ void loadPredefinedAnimationWolf(void)
 	KeyFrameWolf[7].wolfTail = 0.0f;
 
 	// K8: Gira 180 en el inicio (para volver a K0)
-	KeyFrameWolf[8].wolfPosX = 8.0f;
+	KeyFrameWolf[8].wolfPosX = 10.0f;
 	KeyFrameWolf[8].wolfPosY = 0.0f;
 	KeyFrameWolf[8].wolfPosZ = 14.0f;
 	KeyFrameWolf[8].rotWolf = 0.0f; 
@@ -735,7 +730,6 @@ void loadPredefinedAnimationWolf(void)
 	KeyFrameWolf[8].wolfTail = 0.0f;
 
 	FrameIndexWolf = MAX_FRAMES_WOLF;
-	printf("Animacion de patrulla (ping-pong) del lobo cargada\n");
 }
 
 void interpolationWolf(void)
@@ -820,7 +814,7 @@ void AnimationWolf()
 			}
 			else
 			{
-				// --- QUIETO: usar interpolación por keyframes (por si quieres poses) ---
+				// --- QUIETO: usar interpolación por keyframes ---
 				wolfFLegs += KeyFrameWolf[playIndexWolf].wolfFLegsInc;
 				wolfBLegs += KeyFrameWolf[playIndexWolf].wolfBLegsInc;
 				wolfHead += KeyFrameWolf[playIndexWolf].wolfHeadInc;
@@ -847,17 +841,13 @@ void resetElementsLion(void)
 	lionTail = KeyFrameLion[0].lionTail;
 }
 
-// REEMPLAZA ESTA FUNCIÓN COMPLETA
 void loadPredefinedAnimationLion(void)
 {
-	// Path de patrulla (ida y vuelta)
-
-	// --- IDA ---
 	// K0: Inicio
 	KeyFrameLion[0].lionPosX = -6.5f;
-	KeyFrameLion[0].lionPosY = 0.5f;
+	KeyFrameLion[0].lionPosY = 0.3f;
 	KeyFrameLion[0].lionPosZ = 3.0f;
-	KeyFrameLion[0].rotLion = 0.0f; // Mirando +X
+	KeyFrameLion[0].rotLion = 0.0f; 
 	KeyFrameLion[0].lionHead = 0.0f;
 	KeyFrameLion[0].lionFLegs = 0.0f;
 	KeyFrameLion[0].lionBLegs = 0.0f;
@@ -865,7 +855,7 @@ void loadPredefinedAnimationLion(void)
 
 	// K1: Camina
 	KeyFrameLion[1].lionPosX = -3.5f;
-	KeyFrameLion[1].lionPosY = 0.5f;
+	KeyFrameLion[1].lionPosY = 0.3f;
 	KeyFrameLion[1].lionPosZ = 3.0f;
 	KeyFrameLion[1].rotLion = 0.0f;
 	KeyFrameLion[1].lionHead = 0.0f;
@@ -875,9 +865,9 @@ void loadPredefinedAnimationLion(void)
 
 	// K2: Gira para bajar
 	KeyFrameLion[2].lionPosX = -3.5f;
-	KeyFrameLion[2].lionPosY = 0.5f;
+	KeyFrameLion[2].lionPosY = 0.3f;
 	KeyFrameLion[2].lionPosZ = 3.0f;
-	KeyFrameLion[2].rotLion = 90.0f; // Mirando -Z
+	KeyFrameLion[2].rotLion = 90.0f; 
 	KeyFrameLion[2].lionHead = 0.0f;
 	KeyFrameLion[2].lionFLegs = 0.0f;
 	KeyFrameLion[2].lionBLegs = 0.0f;
@@ -885,7 +875,7 @@ void loadPredefinedAnimationLion(void)
 
 	// K3: Camina (FIN DE IDA)
 	KeyFrameLion[3].lionPosX = -3.5f;
-	KeyFrameLion[3].lionPosY = 0.5f;
+	KeyFrameLion[3].lionPosY = 0.3f;
 	KeyFrameLion[3].lionPosZ = -1.0f;
 	KeyFrameLion[3].rotLion = 90.0f;
 	KeyFrameLion[3].lionHead = 0.0f;
@@ -894,11 +884,11 @@ void loadPredefinedAnimationLion(void)
 	KeyFrameLion[3].lionTail = 0.0f;
 
 	// --- VUELTA ---
-	// K4: Gira 180 en el sitio ("se voltea")
+	// K4: Gira 180 
 	KeyFrameLion[4].lionPosX = -3.5f;
-	KeyFrameLion[4].lionPosY = 0.5f;
+	KeyFrameLion[4].lionPosY = 0.3f;
 	KeyFrameLion[4].lionPosZ = -1.0f;
-	KeyFrameLion[4].rotLion = -90.0f; // Mirando +Z
+	KeyFrameLion[4].rotLion = -90.0f;
 	KeyFrameLion[4].lionHead = 0.0f;
 	KeyFrameLion[4].lionFLegs = 0.0f;
 	KeyFrameLion[4].lionBLegs = 0.0f;
@@ -906,7 +896,7 @@ void loadPredefinedAnimationLion(void)
 
 	// K5: Camina de vuelta (al reves)
 	KeyFrameLion[5].lionPosX = -3.5f;
-	KeyFrameLion[5].lionPosY = 0.5f;
+	KeyFrameLion[5].lionPosY = 0.3f;
 	KeyFrameLion[5].lionPosZ = 3.0f;
 	KeyFrameLion[5].rotLion = -90.0f;
 	KeyFrameLion[5].lionHead = 0.0f;
@@ -916,9 +906,9 @@ void loadPredefinedAnimationLion(void)
 
 	// K6: Gira en el sitio
 	KeyFrameLion[6].lionPosX = -3.5f;
-	KeyFrameLion[6].lionPosY = 0.5f;
+	KeyFrameLion[6].lionPosY = 0.3f;
 	KeyFrameLion[6].lionPosZ = 3.0f;
-	KeyFrameLion[6].rotLion = 180.0f; // Mirando -X
+	KeyFrameLion[6].rotLion = 180.0f; 
 	KeyFrameLion[6].lionHead = 0.0f;
 	KeyFrameLion[6].lionFLegs = 0.0f;
 	KeyFrameLion[6].lionBLegs = 0.0f;
@@ -926,7 +916,7 @@ void loadPredefinedAnimationLion(void)
 
 	// K7: Camina de vuelta (al reves) al INICIO
 	KeyFrameLion[7].lionPosX = -6.5f;
-	KeyFrameLion[7].lionPosY = 0.5f;
+	KeyFrameLion[7].lionPosY = 0.3f;
 	KeyFrameLion[7].lionPosZ = 3.0f;
 	KeyFrameLion[7].rotLion = 180.0f;
 	KeyFrameLion[7].lionHead = 0.0f;
@@ -936,16 +926,15 @@ void loadPredefinedAnimationLion(void)
 
 	// K8: Gira 180 en el inicio (para volver a K0)
 	KeyFrameLion[8].lionPosX = -6.5f;
-	KeyFrameLion[8].lionPosY = 0.5f;
+	KeyFrameLion[8].lionPosY = 0.3f;
 	KeyFrameLion[8].lionPosZ = 3.0f;
-	KeyFrameLion[8].rotLion = 0.0f; // Idéntico a K0
+	KeyFrameLion[8].rotLion = 0.0f; 
 	KeyFrameLion[8].lionHead = 0.0f;
 	KeyFrameLion[8].lionFLegs = 0.0f;
 	KeyFrameLion[8].lionBLegs = 0.0f;
 	KeyFrameLion[8].lionTail = 0.0f;
 
 	FrameIndexLion = MAX_FRAMES_LION;
-	printf("Animacion de patrulla (ping-pong) del leon cargada\n");
 }
 
 void interpolationLion(void)
@@ -984,9 +973,6 @@ void AnimationLion()
 	lionPosZ += KeyFrameLion[playIndexLion].incZ;
 	rotLion += KeyFrameLion[playIndexLion].rotLionInc;
 
-	// Ya NO acumulamos lionHead aquí
-	// lionHead += KeyFrameLion[playIndexLion].lionHeadInc;
-
 	bool isMoving = fabs(KeyFrameLion[playIndexLion].incX) > 0.0001f ||
 		fabs(KeyFrameLion[playIndexLion].incZ) > 0.0001f;
 	bool isTurning = fabs(KeyFrameLion[playIndexLion].rotLionInc) > 0.01f;
@@ -994,7 +980,7 @@ void AnimationLion()
 	float time = (float)glfwGetTime();
 	float tNorm = (float)i_curr_steps_lion / (float)i_max_steps_lion;
 
-	// Ángulo base (por si algún día usas poses en keyframes)
+	// Ángulo base 
 	float headBase =
 		KeyFrameLion[playIndexLion].lionHead +
 		KeyFrameLion[playIndexLion].lionHeadInc * tNorm;
@@ -1009,7 +995,7 @@ void AnimationLion()
 
 		lionTail = glm::sin(time * 4.0f) * 20.0f;
 
-		// Cabeza: movimiento suave, NO acumulado
+		// Cabeza: movimiento suave
 		float headOffset = glm::sin(time * 2.5f) * 6.0f; // ±5°
 		lionHead = headBase + headOffset;
 	}
@@ -1081,8 +1067,6 @@ void resetElementsDeer(void)
 }
 void loadPredefinedAnimationDeer(void)
 {
-	// Recorrido suave en la parte alta del bosque.
-
 	// 0 - Esquina superior izquierda
 	KeyFrameDeer[0].deerPosX = 12.0f;
 	KeyFrameDeer[0].deerPosY = -0.5f;
@@ -1165,7 +1149,6 @@ void loadPredefinedAnimationDeer(void)
 	KeyFrameDeer[8].deerBLegs = 0.0f;
 
 	FrameIndexDeer = MAX_FRAMES_DEER;
-	printf("Animacion corregida del venado cargada\n");
 }
 
 
@@ -1241,7 +1224,6 @@ void AnimationDeer()
 			}
 			else
 			{
-				// Idle
 				deerFLegs += KeyFrameDeer[playIndexDeer].deerFLegsInc;
 				deerBLegs += KeyFrameDeer[playIndexDeer].deerBLegsInc;
 				deerHead += KeyFrameDeer[playIndexDeer].deerHeadInc;
@@ -1291,8 +1273,6 @@ void resetElementsBear(void)
 }
 void loadPredefinedAnimationBear(void)
 {
-	// Óvalo rectangular alrededor del oso, todo recto y dentro del bosque.
-
 	// 0 - Esquina superior izquierda
 	KeyFrameBear[0].bearPosX = 11.0f;
 	KeyFrameBear[0].bearPosY = -0.5f;
@@ -1375,7 +1355,6 @@ void loadPredefinedAnimationBear(void)
 	KeyFrameBear[8].bearBLegs = 0.0f;
 
 	FrameIndexBear = MAX_FRAMES_BEAR;
-	printf("Animacion corregida del oso cargada\n");
 }
 
 
@@ -1422,13 +1401,13 @@ void AnimationBear()
 
 			if (isMoving && !isTurning)
 			{
-				// Oso pesado: pasos lentos y amplios
+				//  pasos lentos y amplios
 				float legFrequency = 5.5f;
 				float legAmplitude = 35.0f;
 				bearFLegs = glm::sin(time * legFrequency) * legAmplitude;
 				bearBLegs = -glm::sin(time * legFrequency) * legAmplitude;
 
-				// Cabeza baja / alta lentamente
+				// Cabeza baja 
 				bearHead = glm::sin(time * 2.0f) * 6.0f;
 			}
 			else if (isTurning)
@@ -1609,7 +1588,7 @@ int main()
 	bool birdsArrived = false;   // Indica si ya llegaron
 	float birdProgress = 0.0f;   // Avance de la animación (0 a 1)
 
-	// ===== CARGAR ANIMACIÓN PREDEFINIDA DEL RINOCERONTE =====
+	// ===== CARGAR ANIMACIÓN PREDEFINIDA =====
 	loadPredefinedAnimationRhino();
 	loadPredefinedAnimationZebra();
 	loadPredefinedAnimationWolf();
@@ -2587,113 +2566,107 @@ int main()
 
 		// Vallas bosque
 		glm::mat4 fenceL1 = modelTemp;
-		fenceL1 = glm::translate(fenceL1, glm::vec3(7.5f, -0.5f, 23.5f));
+		fenceL1 = glm::translate(fenceL1, glm::vec3(8.0f, -0.5f, 23.5f));
 		fenceL1 = glm::scale(fenceL1, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL1);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL2 = modelTemp;
-		fenceL2 = glm::translate(fenceL2, glm::vec3(7.5f, -0.5f, 21.5f));
+		fenceL2 = glm::translate(fenceL2, glm::vec3(8.0f, -0.5f, 21.5f));
 		fenceL2 = glm::scale(fenceL2, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL2);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL3 = modelTemp;
-		fenceL3 = glm::translate(fenceL3, glm::vec3(5.5f, -0.5f, 18.5f));
+		fenceL3 = glm::translate(fenceL3, glm::vec3(8.0f, -0.5f, 18.5f));
 		fenceL3 = glm::scale(fenceL3, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL3);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL4 = modelTemp;
-		fenceL4 = glm::translate(fenceL4, glm::vec3(5.5f, -0.5f, 15.5f));
+		fenceL4 = glm::translate(fenceL4, glm::vec3(8.0f, -0.5f, 15.5f));
 		fenceL4 = glm::scale(fenceL4, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL4);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL5 = modelTemp;
-		fenceL5 = glm::translate(fenceL5, glm::vec3(5.5f, -0.5f, 12.5f));
+		fenceL5 = glm::translate(fenceL5, glm::vec3(8.0f, -0.5f, 12.5f));
 		fenceL5 = glm::scale(fenceL5, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL5);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL6 = modelTemp;
-		fenceL6 = glm::translate(fenceL6, glm::vec3(5.5f, -0.5f, 9.5f));
+		fenceL6 = glm::translate(fenceL6, glm::vec3(8.0f, -0.5f, 9.5f));
 		fenceL6 = glm::scale(fenceL6, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL6);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL7 = modelTemp;
-		fenceL7 = glm::translate(fenceL7, glm::vec3(5.5f, -0.5f, 6.5f));
+		fenceL7 = glm::translate(fenceL7, glm::vec3(8.0f, -0.5f, 6.5f));
 		fenceL7 = glm::scale(fenceL7, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL7);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL8 = modelTemp;
-		fenceL8 = glm::translate(fenceL8, glm::vec3(5.5f, -0.5f, 3.5f));
+		fenceL8 = glm::translate(fenceL8, glm::vec3(8.0f, -0.5f, 3.5f));
 		fenceL8 = glm::scale(fenceL8, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL8);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL9 = modelTemp;
-		fenceL9 = glm::translate(fenceL9, glm::vec3(5.5f, -0.5f, 0.5f));
+		fenceL9 = glm::translate(fenceL9, glm::vec3(8.0f, -0.5f, 0.5f));
 		fenceL9 = glm::scale(fenceL9, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL9);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL10 = modelTemp;
-		fenceL10 = glm::translate(fenceL10, glm::vec3(5.5f, -0.5f, -2.5f));
+		fenceL10 = glm::translate(fenceL10, glm::vec3(8.0f, -0.5f, -2.5f));
 		fenceL10 = glm::scale(fenceL10, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL10);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL11 = modelTemp;
-		fenceL11 = glm::translate(fenceL11, glm::vec3(5.5f, -0.5f, -5.5f));
+		fenceL11 = glm::translate(fenceL11, glm::vec3(8.0f, -0.5f, -5.5f));
 		fenceL11 = glm::scale(fenceL11, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL11);
 		WoodenFence.Draw(modelShader);
 
-		// Vallas horizontales 
-		glm::mat4 fenceHL2 = modelTemp;
-		fenceHL2 = glm::translate(fenceHL2, glm::vec3(7.2f, -0.5f, -7.5f));
-		fenceHL2 = glm::rotate(fenceHL2, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		fenceHL2 = glm::scale(fenceHL2, glm::vec3(0.5f, 0.35f, 0.5f));
-		modelShader.setMat4("model", fenceHL2);
-		WoodenFence.Draw(modelShader);
-
+		// Vallas horizontales
 		glm::mat4 fenceHL3 = modelTemp;
-		fenceHL3 = glm::translate(fenceHL3, glm::vec3(10.2f, -0.5f, -7.5f));
+		fenceHL3 = glm::translate(fenceHL3, glm::vec3(10.0f, -0.5f, -7.5f));
 		fenceHL3 = glm::rotate(fenceHL3, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		fenceHL3 = glm::scale(fenceHL3, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceHL3);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceHL4 = modelTemp;
-		fenceHL4 = glm::translate(fenceHL4, glm::vec3(13.2f, -0.5f, -7.5f)); 
+		fenceHL4 = glm::translate(fenceHL4, glm::vec3(13.0f, -0.5f, -7.5f));
 		fenceHL4 = glm::rotate(fenceHL4, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		fenceHL4 = glm::scale(fenceHL4, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceHL4);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceHL5 = modelTemp;
-		fenceHL5 = glm::translate(fenceHL5, glm::vec3(16.2f, -0.5f, -7.5f));  
+		fenceHL5 = glm::translate(fenceHL5, glm::vec3(16.0f, -0.5f, -7.5f));
 		fenceHL5 = glm::rotate(fenceHL5, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		fenceHL5 = glm::scale(fenceHL5, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceHL5);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceHL6 = modelTemp;
-		fenceHL6 = glm::translate(fenceHL6, glm::vec3(19.2f, -0.5f, -7.5f)); 
+		fenceHL6 = glm::translate(fenceHL6, glm::vec3(19.0f, -0.5f, -7.5f));
 		fenceHL6 = glm::rotate(fenceHL6, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		fenceHL6 = glm::scale(fenceHL6, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceHL6);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceHL7 = modelTemp;
-		fenceHL7 = glm::translate(fenceHL7, glm::vec3(21.0f, -0.5f, -7.5f));  
+		fenceHL7 = glm::translate(fenceHL7, glm::vec3(21.0f, -0.5f, -7.5f));
 		fenceHL7 = glm::rotate(fenceHL7, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		fenceHL7 = glm::scale(fenceHL7, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceHL7);
 		WoodenFence.Draw(modelShader);
+
 
 		// segundo nivel de vallas
 		glm::mat4 fence21_upper = modelTemp;
@@ -2800,102 +2773,96 @@ int main()
 
 		// Vallas bosque segundo nivel
 		glm::mat4 fenceL12_upper = modelTemp;
-		fenceL12_upper = glm::translate(fenceL12_upper, glm::vec3(5.5f, 0.9f, 23.5f));
+		fenceL12_upper = glm::translate(fenceL12_upper, glm::vec3(8.0f, 0.9f, 23.5f));
 		fenceL12_upper = glm::scale(fenceL12_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL12_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL13_upper = modelTemp;
-		fenceL13_upper = glm::translate(fenceL13_upper, glm::vec3(5.5f, 0.9f, 21.5f));
+		fenceL13_upper = glm::translate(fenceL13_upper, glm::vec3(8.0f, 0.9f, 21.5f));
 		fenceL13_upper = glm::scale(fenceL13_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL13_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL14_upper = modelTemp;
-		fenceL14_upper = glm::translate(fenceL14_upper, glm::vec3(5.5f, 0.9f, 18.5f));
+		fenceL14_upper = glm::translate(fenceL14_upper, glm::vec3(8.0f, 0.9f, 18.5f));
 		fenceL14_upper = glm::scale(fenceL14_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL14_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL15_upper = modelTemp;
-		fenceL15_upper = glm::translate(fenceL15_upper, glm::vec3(5.5f, 0.9f, 15.5f));
+		fenceL15_upper = glm::translate(fenceL15_upper, glm::vec3(8.0f, 0.9f, 15.5f));
 		fenceL15_upper = glm::scale(fenceL15_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL15_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL16_upper = modelTemp;
-		fenceL16_upper = glm::translate(fenceL16_upper, glm::vec3(5.5f, 0.9f, 12.5f));
+		fenceL16_upper = glm::translate(fenceL16_upper, glm::vec3(8.0f, 0.9f, 12.5f));
 		fenceL16_upper = glm::scale(fenceL16_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL16_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL17_upper = modelTemp;
-		fenceL17_upper = glm::translate(fenceL17_upper, glm::vec3(5.5f, 0.9f, 9.5f));
+		fenceL17_upper = glm::translate(fenceL17_upper, glm::vec3(8.0f, 0.9f, 9.5f));
 		fenceL17_upper = glm::scale(fenceL17_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL17_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL18_upper = modelTemp;
-		fenceL18_upper = glm::translate(fenceL18_upper, glm::vec3(5.5f, 0.9f, 6.5f));
+		fenceL18_upper = glm::translate(fenceL18_upper, glm::vec3(8.0f, 0.9f, 6.5f));
 		fenceL18_upper = glm::scale(fenceL18_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL18_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL19_upper = modelTemp;
-		fenceL19_upper = glm::translate(fenceL19_upper, glm::vec3(5.5f, 0.9f, 3.5f));
+		fenceL19_upper = glm::translate(fenceL19_upper, glm::vec3(8.0f, 0.9f, 3.5f));
 		fenceL19_upper = glm::scale(fenceL19_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL19_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL20_upper = modelTemp;
-		fenceL20_upper = glm::translate(fenceL20_upper, glm::vec3(5.5f, 0.9f, 0.5f));
+		fenceL20_upper = glm::translate(fenceL20_upper, glm::vec3(8.0f, 0.9f, 0.5f));
 		fenceL20_upper = glm::scale(fenceL20_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL20_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL21_upper = modelTemp;
-		fenceL21_upper = glm::translate(fenceL21_upper, glm::vec3(5.5f, 0.9f, -2.5f));
+		fenceL21_upper = glm::translate(fenceL21_upper, glm::vec3(8.0f, 0.9f, -2.5f));
 		fenceL21_upper = glm::scale(fenceL21_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL21_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL22_upper = modelTemp;
-		fenceL22_upper = glm::translate(fenceL22_upper, glm::vec3(5.5f, 0.9f, -5.5f));
+		fenceL22_upper = glm::translate(fenceL22_upper, glm::vec3(8.0f, 0.9f, -5.5f));
 		fenceL22_upper = glm::scale(fenceL22_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL22_upper);
 		WoodenFence.Draw(modelShader);
 
-		// Vallas horizontales superiores - Bosque
-		glm::mat4 fenceHL8_upper = modelTemp;
-		fenceHL8_upper = glm::translate(fenceHL8_upper, glm::vec3(7.2f, 0.9f, -7.5f));
-		fenceHL8_upper = glm::rotate(fenceHL8_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		fenceHL8_upper = glm::scale(fenceHL8_upper, glm::vec3(0.5f, 0.35f, 0.5f));
-		modelShader.setMat4("model", fenceHL8_upper);
-		WoodenFence.Draw(modelShader);
+		// Vallas horizontales superiores 
 
 		glm::mat4 fenceHL9_upper = modelTemp;
-		fenceHL9_upper = glm::translate(fenceHL9_upper, glm::vec3(10.2f, 0.9f, -7.5f));
+		fenceHL9_upper = glm::translate(fenceHL9_upper, glm::vec3(10.0f, 0.9f, -7.5f));
 		fenceHL9_upper = glm::rotate(fenceHL9_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		fenceHL9_upper = glm::scale(fenceHL9_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceHL9_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceHL10_upper = modelTemp;
-		fenceHL10_upper = glm::translate(fenceHL10_upper, glm::vec3(13.2f, 0.9f, -7.5f));
+		fenceHL10_upper = glm::translate(fenceHL10_upper, glm::vec3(13.0f, 0.9f, -7.5f));
 		fenceHL10_upper = glm::rotate(fenceHL10_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		fenceHL10_upper = glm::scale(fenceHL10_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceHL10_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceHL11_upper = modelTemp;
-		fenceHL11_upper = glm::translate(fenceHL11_upper, glm::vec3(16.2f, 0.9f, -7.5f));
+		fenceHL11_upper = glm::translate(fenceHL11_upper, glm::vec3(16.0f, 0.9f, -7.5f));
 		fenceHL11_upper = glm::rotate(fenceHL11_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		fenceHL11_upper = glm::scale(fenceHL11_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceHL11_upper);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceHL12_upper = modelTemp;
-		fenceHL12_upper = glm::translate(fenceHL12_upper, glm::vec3(19.2f, 0.9f, -7.5f));
+		fenceHL12_upper = glm::translate(fenceHL12_upper, glm::vec3(19.0f, 0.9f, -7.5f));
 		fenceHL12_upper = glm::rotate(fenceHL12_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		fenceHL12_upper = glm::scale(fenceHL12_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceHL12_upper);
@@ -2907,6 +2874,7 @@ int main()
 		fenceHL13_upper = glm::scale(fenceHL13_upper, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceHL13_upper);
 		WoodenFence.Draw(modelShader);
+
 
 		//=== Arboles de savana ===
 		glm::mat4 oliveTree1 = modelTemp;
