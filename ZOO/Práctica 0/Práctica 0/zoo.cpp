@@ -1584,7 +1584,7 @@ int main()
 	Model reja((char*)"Models/Fence/Wire Fence.obj");
 	Model Tree((char*)"Models/LotofTrees/OBJ_AS11_Chinaberry_1.obj");
 	Model TreeA((char*)"Models/AppleTree/RedDeliciousApple.obj");
-	//Model AfricanOlive((char*)"Models/AfricanOlive/AfricanOlive.obj");
+	Model AfricanOlive((char*)"Models/AfricanOlive/AfricanOlive.obj");
 	Model WoodenFence((char*)"Models/WoodenFence/WoodenFence.obj");
 	Model Bench((char*)"Models/Bench/Bench.obj");
 	Model ForestTree((char*)"Models/ForestTree/ForestTree.obj");
@@ -1598,6 +1598,17 @@ int main()
 	Model seaCrab((char*)"Models/Crab/Sea_Crab_Quad.obj");
 	Model corals((char*)"Models/AlienTubes/AlienTubes.obj");
 
+	//Modelos del Aviario
+	Model budgerigar((char*)"Models/Budgerigar/Budgerigar_Quad.obj");
+	Model pajaro((char*)"Models/Parrot/Parrot_Quad.obj");
+	Model toucan((char*)"Models/Toucan/Toucan_Quad.obj");
+	Model birdWood((char*)"Models/BirdWood/model.obj");
+	Model eagle((char*)"Models/Eagle/model.obj");
+	Model estanque((char*)"Models/Estanque/model.obj");
+	// === Control de aves del aviario ===
+	bool birdsArrived = false;   // Indica si ya llegaron
+	float birdProgress = 0.0f;   // Avance de la animación (0 a 1)
+
 	// ===== CARGAR ANIMACIÓN PREDEFINIDA DEL RINOCERONTE =====
 	loadPredefinedAnimationRhino();
 	loadPredefinedAnimationZebra();
@@ -1605,8 +1616,6 @@ int main()
 	loadPredefinedAnimationLion();
 	loadPredefinedAnimationDeer();
 	loadPredefinedAnimationBear();
-
-
 
 	glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
@@ -2472,9 +2481,7 @@ int main()
 		coral = glm::scale(coral, glm::vec3(0.05f));
 		modelShader.setMat4("model", coral);
 		corals.Draw(modelShader);
-
 		
-
 		//=== vallas para la savana ===
 		glm::mat4 fence1 = modelTemp;
 		fence1 = glm::translate(fence1, glm::vec3(-2.5f, -0.5f, 23.5f));  
@@ -2689,7 +2696,7 @@ int main()
 		WoodenFence.Draw(modelShader);
 
 		//=== Arboles de savana ===
-		/*glm::mat4 oliveTree1 = modelTemp;
+		glm::mat4 oliveTree1 = modelTemp;
 		oliveTree1 = glm::translate(oliveTree1, glm::vec3(-10.0f, -0.5f, 15.0f));
 		oliveTree1 = glm::scale(oliveTree1, glm::vec3(1.0f));
 		modelShader.setMat4("model", oliveTree1);
@@ -2714,7 +2721,7 @@ int main()
 		oliveTree4 = glm::rotate(oliveTree4, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		oliveTree4 = glm::scale(oliveTree4, glm::vec3(1.0f));
 		modelShader.setMat4("model", oliveTree4);
-		AfricanOlive.Draw(modelShader);*/
+		AfricanOlive.Draw(modelShader);
 
 		glm::mat4 forestTree1 = modelTemp;
 		forestTree1 = glm::translate(forestTree1, glm::vec3(18.0f, -0.5f, 18.0f));
@@ -2756,34 +2763,6 @@ int main()
 		bench2 = glm::scale(bench2, glm::vec3(2.0f, 2.0f, 2.0f));
 		modelShader.setMat4("model", bench2);
 		Bench.Draw(modelShader);
-
-		
-		//=== Habitat Aviario ===
-		glm::mat4 rejaA = modelTemp;
-		rejaA = glm::translate(rejaA, glm::vec3(12.0f, -0.8f, -28.0f));
-		rejaA = glm::scale(rejaA, glm::vec3(7.0f, 6.0f, 5.0f));
-		modelShader.setMat4("model", rejaA);
-		reja.Draw(modelShader);
-
-		glm::mat4 rejaB = modelTemp;
-		rejaB = glm::translate(rejaB, glm::vec3(3.0f, -0.8f, -21.5f));
-		rejaB = glm::rotate(rejaB, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		rejaB = glm::scale(rejaB, glm::vec3(5.0f, 6.0f, 5.0f));
-		modelShader.setMat4("model", rejaB);
-		reja.Draw(modelShader);
-
-		glm::mat4 rejaA1 = modelTemp;
-		rejaA1 = glm::translate(rejaA1, glm::vec3(12.0f, -0.8f, -15.0f));
-		rejaA1 = glm::scale(rejaA1, glm::vec3(7.0f, 6.0f, 5.0f));
-		modelShader.setMat4("model", rejaA1);
-		reja.Draw(modelShader);
-
-		glm::mat4 rejaB1 = modelTemp;
-		rejaB1 = glm::translate(rejaB1, glm::vec3(20.5f, -0.8f, -21.5f));
-		rejaB1 = glm::rotate(rejaB1, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		rejaB1 = glm::scale(rejaB1, glm::vec3(5.0f, 6.0f, 5.0f));
-		modelShader.setMat4("model", rejaB1);
-		reja.Draw(modelShader);
 
 		//Arbolitos del acuario
 		glm::mat4 tree1 = modelTemp;
@@ -2857,6 +2836,112 @@ int main()
 		tree3 = glm::scale(tree3, glm::vec3(0.02f));
 		modelShader.setMat4("model", tree3);
 		Tree.Draw(modelShader);
+
+		glm::mat4 birdW = modelTemp;
+		birdW = glm::translate(birdW, glm::vec3(9.0f, -0.5f, -24.0f));
+		birdW = glm::scale(birdW, glm::vec3(8.0f));
+		modelShader.setMat4("model", birdW);
+		birdWood.Draw(modelShader);
+
+		//=== Habitat Aviario ===
+		glm::mat4 rejaA = modelTemp;
+		rejaA = glm::translate(rejaA, glm::vec3(12.0f, -0.8f, -28.0f));
+		rejaA = glm::scale(rejaA, glm::vec3(7.0f, 6.0f, 5.0f));
+		modelShader.setMat4("model", rejaA);
+		reja.Draw(modelShader);
+
+		glm::mat4 rejaB = modelTemp;
+		rejaB = glm::translate(rejaB, glm::vec3(3.0f, -0.8f, -21.5f));
+		rejaB = glm::rotate(rejaB, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		rejaB = glm::scale(rejaB, glm::vec3(5.0f, 6.0f, 5.0f));
+		modelShader.setMat4("model", rejaB);
+		reja.Draw(modelShader);
+
+		glm::mat4 rejaA1 = modelTemp;
+		rejaA1 = glm::translate(rejaA1, glm::vec3(12.0f, -0.8f, -15.0f));
+		rejaA1 = glm::scale(rejaA1, glm::vec3(7.0f, 6.0f, 5.0f));
+		modelShader.setMat4("model", rejaA1);
+		reja.Draw(modelShader);
+
+		glm::mat4 rejaB1 = modelTemp;
+		rejaB1 = glm::translate(rejaB1, glm::vec3(21.0f, -0.8f, -21.5f));
+		rejaB1 = glm::rotate(rejaB1, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		rejaB1 = glm::scale(rejaB1, glm::vec3(5.0f, 6.0f, 5.0f));
+		modelShader.setMat4("model", rejaB1);
+		reja.Draw(modelShader);
+
+		// === ACTUALIZAR PROGRESO DE VUELO DE LAS AVES ===
+		if (!birdsArrived) {
+			birdProgress += 0.0005f; 
+			if (birdProgress >= 1.0f) {
+				birdProgress = 1.0f;
+				birdsArrived = true;
+			}
+		}
+
+		glm::vec3 centroAviario = glm::vec3(12.0f, 0.0f, -21.5f);
+		float aviarioRad = 10.0f;
+		float distanceToAviary = glm::distance(camera.GetPosition(), centroAviario);
+
+		if (distanceToAviary < aviarioRad)
+		{
+			// === PAJARO 1 ===
+			glm::vec3 startPajaro = glm::vec3(16.8f, 10.0f, -22.0f); 
+			glm::vec3 endPajaro = glm::vec3(16.8f, 4.0f, -22.0f);  // posado
+			glm::vec3 posPajaro = glm::mix(startPajaro, endPajaro, birdProgress);
+
+			glm::mat4 ave = modelTemp;
+			ave = glm::translate(ave, posPajaro);
+			ave = glm::rotate(ave, glm::radians(-45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			ave = glm::scale(ave, glm::vec3(3.0f));
+			modelShader.setMat4("model", ave);
+			pajaro.Draw(modelShader);
+
+			// === PERICO ===
+			glm::vec3 startPerico = glm::vec3(9.0f, 8.0f, -23.8f);
+			glm::vec3 endPerico = glm::vec3(9.0f, 0.5f, -23.8f);
+			glm::vec3 posPerico = glm::mix(startPerico, endPerico, birdProgress);
+
+			glm::mat4 perico = modelTemp;
+			perico = glm::translate(perico, posPerico);
+			perico = glm::scale(perico, glm::vec3(3.5f));
+			modelShader.setMat4("model", perico);
+			budgerigar.Draw(modelShader);
+
+			// === TUCÁN ===
+			glm::vec3 startTucan = glm::vec3(17.0f, 10.2f, -18.0f);
+			glm::vec3 endTucan = glm::vec3(17.0f, 5.2f, -18.0f);
+			glm::vec3 posTucan = glm::mix(startTucan, endTucan, birdProgress);
+
+			glm::mat4 tucan = modelTemp;
+			tucan = glm::translate(tucan, posTucan);
+			tucan = glm::rotate(tucan, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			tucan = glm::scale(tucan, glm::vec3(2.5f));
+			modelShader.setMat4("model", tucan);
+			toucan.Draw(modelShader);
+		}
+
+		//=== Animacion Aguila ===
+		{
+			glm::mat4 aguila = modelTemp;
+
+			float timeValue = glfwGetTime();
+			float floatY = sin(timeValue * 0.8f) * 0.2f;   // movimiento suave en Y
+			float tilt = sin(timeValue * 0.4f) * glm::radians(15.0f); // ligera inclinación
+
+			aguila = glm::translate(aguila, glm::vec3(12.0f, 14.5f + floatY, -20.0f));
+			aguila = glm::rotate(aguila, glm::radians(155.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			aguila = glm::rotate(aguila, tilt, glm::vec3(1.0f, 0.0f, 0.0f));
+			aguila = glm::scale(aguila, glm::vec3(0.03f));
+			modelShader.setMat4("model", aguila);
+			eagle.Draw(modelShader);
+		}
+
+		glm::mat4 pond = modelTemp;
+		pond = glm::translate(pond, glm::vec3(13.0f, -0.4f, -18.0f));
+		pond = glm::scale(pond, glm::vec3(4.4f));
+		modelShader.setMat4("model", pond);
+		estanque.Draw(modelShader);
 
 		// === Dibujar acuario con textura de agua ===
 		lightingShader.Use();
