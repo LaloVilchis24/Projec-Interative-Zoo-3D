@@ -2587,13 +2587,13 @@ int main()
 
 		// Vallas bosque
 		glm::mat4 fenceL1 = modelTemp;
-		fenceL1 = glm::translate(fenceL1, glm::vec3(5.5f, -0.5f, 23.5f));
+		fenceL1 = glm::translate(fenceL1, glm::vec3(7.5f, -0.5f, 23.5f));
 		fenceL1 = glm::scale(fenceL1, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL1);
 		WoodenFence.Draw(modelShader);
 
 		glm::mat4 fenceL2 = modelTemp;
-		fenceL2 = glm::translate(fenceL2, glm::vec3(5.5f, -0.5f, 21.5f));
+		fenceL2 = glm::translate(fenceL2, glm::vec3(7.5f, -0.5f, 21.5f));
 		fenceL2 = glm::scale(fenceL2, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceL2);
 		WoodenFence.Draw(modelShader);
@@ -2693,6 +2693,219 @@ int main()
 		fenceHL7 = glm::rotate(fenceHL7, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		fenceHL7 = glm::scale(fenceHL7, glm::vec3(0.5f, 0.35f, 0.5f));
 		modelShader.setMat4("model", fenceHL7);
+		WoodenFence.Draw(modelShader);
+
+		// segundo nivel de vallas
+		glm::mat4 fence21_upper = modelTemp;
+		fence21_upper = glm::translate(fence21_upper, glm::vec3(-2.5f, 0.9f, 23.5f));
+		fence21_upper = glm::scale(fence21_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fence21_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fence22_upper = modelTemp;
+		fence22_upper = glm::translate(fence22_upper, glm::vec3(-2.5f, 0.9f, 21.5f));
+		fence22_upper = glm::scale(fence22_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fence22_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fence23_upper = modelTemp;
+		fence23_upper = glm::translate(fence23_upper, glm::vec3(-2.5f, 0.9f, 18.5f));
+		fence23_upper = glm::scale(fence23_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fence23_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fence24_upper = modelTemp;
+		fence24_upper = glm::translate(fence24_upper, glm::vec3(-2.5f, 0.9f, 15.5f));
+		fence24_upper = glm::scale(fence24_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fence24_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fence25_upper = modelTemp;
+		fence25_upper = glm::translate(fence25_upper, glm::vec3(-2.5f, 0.9f, 12.5f));
+		fence25_upper = glm::scale(fence25_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fence25_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fence26_upper = modelTemp;
+		fence26_upper = glm::translate(fence26_upper, glm::vec3(-2.5f, 0.9f, 9.5f));
+		fence26_upper = glm::scale(fence26_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fence26_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fence27_upper = modelTemp;
+		fence27_upper = glm::translate(fence27_upper, glm::vec3(-2.5f, 0.9f, 6.5f));
+		fence27_upper = glm::scale(fence27_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fence27_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fence28_upper = modelTemp;
+		fence28_upper = glm::translate(fence28_upper, glm::vec3(-2.5f, 0.9f, 3.5f));
+		fence28_upper = glm::scale(fence28_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fence28_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fence29_upper = modelTemp;
+		fence29_upper = glm::translate(fence29_upper, glm::vec3(-2.5f, 0.9f, 0.5f));
+		fence29_upper = glm::scale(fence29_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fence29_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fence30_upper = modelTemp;
+		fence30_upper = glm::translate(fence30_upper, glm::vec3(-2.5f, 0.9f, -2.5f));
+		fence30_upper = glm::scale(fence30_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fence30_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fence31_upper = modelTemp;
+		fence31_upper = glm::translate(fence31_upper, glm::vec3(-2.5f, 0.9f, -5.5f));
+		fence31_upper = glm::scale(fence31_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fence31_upper);
+		WoodenFence.Draw(modelShader);
+
+		// Vallas horizontales superiores - Savana
+		glm::mat4 fenceH7_upper = modelTemp;
+		fenceH7_upper = glm::translate(fenceH7_upper, glm::vec3(-4.2f, 0.9f, -7.5f));
+		fenceH7_upper = glm::rotate(fenceH7_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		fenceH7_upper = glm::scale(fenceH7_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceH7_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceH8_upper = modelTemp;
+		fenceH8_upper = glm::translate(fenceH8_upper, glm::vec3(-7.2f, 0.9f, -7.5f));
+		fenceH8_upper = glm::rotate(fenceH8_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		fenceH8_upper = glm::scale(fenceH8_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceH8_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceH9_upper = modelTemp;
+		fenceH9_upper = glm::translate(fenceH9_upper, glm::vec3(-10.2f, 0.9f, -7.5f));
+		fenceH9_upper = glm::rotate(fenceH9_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		fenceH9_upper = glm::scale(fenceH9_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceH9_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceH10_upper = modelTemp;
+		fenceH10_upper = glm::translate(fenceH10_upper, glm::vec3(-13.2f, 0.9f, -7.5f));
+		fenceH10_upper = glm::rotate(fenceH10_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		fenceH10_upper = glm::scale(fenceH10_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceH10_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceH11_upper = modelTemp;
+		fenceH11_upper = glm::translate(fenceH11_upper, glm::vec3(-15.2f, 0.9f, -7.5f));
+		fenceH11_upper = glm::rotate(fenceH11_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		fenceH11_upper = glm::scale(fenceH11_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceH11_upper);
+		WoodenFence.Draw(modelShader);
+
+		// Vallas bosque segundo nivel
+		glm::mat4 fenceL12_upper = modelTemp;
+		fenceL12_upper = glm::translate(fenceL12_upper, glm::vec3(5.5f, 0.9f, 23.5f));
+		fenceL12_upper = glm::scale(fenceL12_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceL12_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceL13_upper = modelTemp;
+		fenceL13_upper = glm::translate(fenceL13_upper, glm::vec3(5.5f, 0.9f, 21.5f));
+		fenceL13_upper = glm::scale(fenceL13_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceL13_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceL14_upper = modelTemp;
+		fenceL14_upper = glm::translate(fenceL14_upper, glm::vec3(5.5f, 0.9f, 18.5f));
+		fenceL14_upper = glm::scale(fenceL14_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceL14_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceL15_upper = modelTemp;
+		fenceL15_upper = glm::translate(fenceL15_upper, glm::vec3(5.5f, 0.9f, 15.5f));
+		fenceL15_upper = glm::scale(fenceL15_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceL15_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceL16_upper = modelTemp;
+		fenceL16_upper = glm::translate(fenceL16_upper, glm::vec3(5.5f, 0.9f, 12.5f));
+		fenceL16_upper = glm::scale(fenceL16_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceL16_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceL17_upper = modelTemp;
+		fenceL17_upper = glm::translate(fenceL17_upper, glm::vec3(5.5f, 0.9f, 9.5f));
+		fenceL17_upper = glm::scale(fenceL17_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceL17_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceL18_upper = modelTemp;
+		fenceL18_upper = glm::translate(fenceL18_upper, glm::vec3(5.5f, 0.9f, 6.5f));
+		fenceL18_upper = glm::scale(fenceL18_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceL18_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceL19_upper = modelTemp;
+		fenceL19_upper = glm::translate(fenceL19_upper, glm::vec3(5.5f, 0.9f, 3.5f));
+		fenceL19_upper = glm::scale(fenceL19_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceL19_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceL20_upper = modelTemp;
+		fenceL20_upper = glm::translate(fenceL20_upper, glm::vec3(5.5f, 0.9f, 0.5f));
+		fenceL20_upper = glm::scale(fenceL20_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceL20_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceL21_upper = modelTemp;
+		fenceL21_upper = glm::translate(fenceL21_upper, glm::vec3(5.5f, 0.9f, -2.5f));
+		fenceL21_upper = glm::scale(fenceL21_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceL21_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceL22_upper = modelTemp;
+		fenceL22_upper = glm::translate(fenceL22_upper, glm::vec3(5.5f, 0.9f, -5.5f));
+		fenceL22_upper = glm::scale(fenceL22_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceL22_upper);
+		WoodenFence.Draw(modelShader);
+
+		// Vallas horizontales superiores - Bosque
+		glm::mat4 fenceHL8_upper = modelTemp;
+		fenceHL8_upper = glm::translate(fenceHL8_upper, glm::vec3(7.2f, 0.9f, -7.5f));
+		fenceHL8_upper = glm::rotate(fenceHL8_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		fenceHL8_upper = glm::scale(fenceHL8_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceHL8_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceHL9_upper = modelTemp;
+		fenceHL9_upper = glm::translate(fenceHL9_upper, glm::vec3(10.2f, 0.9f, -7.5f));
+		fenceHL9_upper = glm::rotate(fenceHL9_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		fenceHL9_upper = glm::scale(fenceHL9_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceHL9_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceHL10_upper = modelTemp;
+		fenceHL10_upper = glm::translate(fenceHL10_upper, glm::vec3(13.2f, 0.9f, -7.5f));
+		fenceHL10_upper = glm::rotate(fenceHL10_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		fenceHL10_upper = glm::scale(fenceHL10_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceHL10_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceHL11_upper = modelTemp;
+		fenceHL11_upper = glm::translate(fenceHL11_upper, glm::vec3(16.2f, 0.9f, -7.5f));
+		fenceHL11_upper = glm::rotate(fenceHL11_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		fenceHL11_upper = glm::scale(fenceHL11_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceHL11_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceHL12_upper = modelTemp;
+		fenceHL12_upper = glm::translate(fenceHL12_upper, glm::vec3(19.2f, 0.9f, -7.5f));
+		fenceHL12_upper = glm::rotate(fenceHL12_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		fenceHL12_upper = glm::scale(fenceHL12_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceHL12_upper);
+		WoodenFence.Draw(modelShader);
+
+		glm::mat4 fenceHL13_upper = modelTemp;
+		fenceHL13_upper = glm::translate(fenceHL13_upper, glm::vec3(21.0f, 0.9f, -7.5f));
+		fenceHL13_upper = glm::rotate(fenceHL13_upper, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		fenceHL13_upper = glm::scale(fenceHL13_upper, glm::vec3(0.5f, 0.35f, 0.5f));
+		modelShader.setMat4("model", fenceHL13_upper);
 		WoodenFence.Draw(modelShader);
 
 		//=== Arboles de savana ===
