@@ -1584,7 +1584,7 @@ int main()
 	Model reja((char*)"Models/Fence/Wire Fence.obj");
 	Model Tree((char*)"Models/LotofTrees/OBJ_AS11_Chinaberry_1.obj");
 	Model TreeA((char*)"Models/AppleTree/RedDeliciousApple.obj");
-	Model AfricanOlive((char*)"Models/AfricanOlive/AfricanOlive.obj");
+	//Model AfricanOlive((char*)"Models/AfricanOlive/AfricanOlive.obj");
 	Model WoodenFence((char*)"Models/WoodenFence/WoodenFence.obj");
 	Model Bench((char*)"Models/Bench/Bench.obj");
 	Model ForestTree((char*)"Models/ForestTree/ForestTree.obj");
@@ -2689,7 +2689,7 @@ int main()
 		WoodenFence.Draw(modelShader);
 
 		//=== Arboles de savana ===
-		glm::mat4 oliveTree1 = modelTemp;
+		/*glm::mat4 oliveTree1 = modelTemp;
 		oliveTree1 = glm::translate(oliveTree1, glm::vec3(-10.0f, -0.5f, 15.0f));
 		oliveTree1 = glm::scale(oliveTree1, glm::vec3(1.0f));
 		modelShader.setMat4("model", oliveTree1);
@@ -2714,7 +2714,7 @@ int main()
 		oliveTree4 = glm::rotate(oliveTree4, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		oliveTree4 = glm::scale(oliveTree4, glm::vec3(1.0f));
 		modelShader.setMat4("model", oliveTree4);
-		AfricanOlive.Draw(modelShader);
+		AfricanOlive.Draw(modelShader);*/
 
 		glm::mat4 forestTree1 = modelTemp;
 		forestTree1 = glm::translate(forestTree1, glm::vec3(18.0f, -0.5f, 18.0f));
